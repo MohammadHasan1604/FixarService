@@ -201,11 +201,19 @@ export default function BookingWizard() {
 
     // Step 4: Location
     if (step === 4) {
-      if (!formData.building.trim() || !formData.street.trim()) {
+      if (!formData.city.trim()) {
+        setSubmitError(language === "ar" ? "يرجى إدخال المدينة أو الإمارة" : "Please enter your city/emirate");
+        return false;
+      }
+      if (!formData.area.trim()) {
+        setSubmitError(language === "ar" ? "يرجى إدخال المنطقة أو الحي" : "Please enter your area or neighborhood");
+        return false;
+      }
+      if (!formData.building.trim()) {
         setSubmitError(
           language === "ar"
-            ? "يرجى إدخال اسم أو رقم البناية والشارع لتسهيل وصول الفني"
-            : "Please enter building/villa name and street name"
+            ? "يرجى إدخال اسم أو رقم البناية أو الفيلا لتسهيل وصول الفني"
+            : "Please enter building / villa name or number"
         );
         return false;
       }
@@ -773,7 +781,7 @@ export default function BookingWizard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
                 {t.booking.building} *
@@ -793,6 +801,19 @@ export default function BookingWizard() {
 
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                {language === "ar" ? "الشارع / علامة مميزة" : "Street / Landmark"}
+              </label>
+              <input
+                type="text"
+                value={formData.street}
+                onChange={(e) => updateField("street", e.target.value)}
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:ring-2 focus:ring-brand-blue outline-none"
+                placeholder={language === "ar" ? "مثال: شارع الاتحاد / قرب المسجد" : "E.g., Al Ittihad St / Near Mosque"}
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
                 {t.booking.apartment}
               </label>
               <input
@@ -800,7 +821,7 @@ export default function BookingWizard() {
                 value={formData.apartment}
                 onChange={(e) => updateField("apartment", e.target.value)}
                 className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:ring-2 focus:ring-brand-blue outline-none"
-                placeholder={language === "ar" ? "شقة 402" : "E.g., Apt 402"}
+                placeholder={language === "ar" ? "شقة 402 (اختياري)" : "E.g., Apt 402 (Optional)"}
               />
             </div>
           </div>
@@ -951,9 +972,17 @@ export default function BookingWizard() {
               <span className="font-bold text-brand-navy block uppercase text-[11px] tracking-wider border-b pb-1">
                 {language === "ar" ? "عنوان الزيارة:" : "Service Address:"}
               </span>
-              <p className="text-slate-700">
-                {formData.building} {formData.apartment ? `, Apt ${formData.apartment}` : ""}, {formData.street},{" "}
-                {formData.area}, {formData.city}, {formData.country}
+              <p className="text-slate-700 font-medium">
+                {[
+                  formData.building,
+                  formData.apartment ? `${language === "ar" ? "شقة" : "Apt"} ${formData.apartment}` : null,
+                  formData.street,
+                  formData.area,
+                  formData.city,
+                  formData.country,
+                ]
+                  .filter(Boolean)
+                  .join(", ")}
               </p>
               {formData.landmark && (
                 <p className="text-slate-500">
