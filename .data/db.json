@@ -1,0 +1,738 @@
+{
+  "settings": {
+    "companyName": "Fixar Service",
+    "companyNameAr": "فيكسار سيرفيس",
+    "tagline": "Professional Home Appliance Repair & Maintenance at Your Doorstep",
+    "taglineAr": "خدمات تصليح وصيانة الأجهزة المنزلية الاحترافية عند باب منزلك",
+    "email": "fixarservices@gmail.com",
+    "operatingHours": "24 Hours / 7 Days",
+    "operatingHoursAr": "24 ساعة / 7 أيام طوال الأسبوع",
+    "primaryLocation": "106 Al Zahraa St–105th St, Hay Al Sharq, Sharjah, UAE",
+    "primaryLocationAr": "106 شارع الزهراء - شارع 105، حي الشرق، الشارقة، الإمارات",
+    "googleMapsDirectionsUrl": "https://maps.app.goo.gl/LrnC8H42yujc5oTM6?g_st=iw",
+    "googleMapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3606.3262602715783!2d55.390506!3d25.358702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f596a793a8d11%3A0x7bebe84c79ca906a!2s106%20Al%20Zahraa%20St%20-%20Sharjah!5e0!3m2!1sen!2sae!4v1710000000000!5m2!1sen!2sae",
+    "defaultCountry": "uae",
+    "supportedRegions": {
+      "uae": {
+        "id": "uae",
+        "country": "United Arab Emirates",
+        "countryAr": "الإمارات العربية المتحدة",
+        "city": "Sharjah & Dubai",
+        "cityAr": "الشارقة ودبي وعجمان",
+        "phone": "+971543377512",
+        "phoneDisplay": "+971 54 337 7512",
+        "whatsapp": "+971543377512",
+        "whatsappDisplay": "+971 54 337 7512",
+        "address": "106 Al Zahraa St–105th St, Hay Al Sharq, Sharjah, UAE",
+        "addressAr": "106 شارع الزهراء - شارع 105، حي الشرق، الشارقة",
+        "currency": "AED",
+        "currencyAr": "درهم",
+        "googleMapsUrl": "https://maps.app.goo.gl/LrnC8H42yujc5oTM6?g_st=iw",
+        "serviceAreas": [
+          "Sharjah",
+          "Dubai",
+          "Ajman",
+          "Al Nahda",
+          "Al Majaz",
+          "Muwaileh",
+          "Deira",
+          "Al Barsha",
+          "Mirdif"
+        ],
+        "serviceAreasAr": [
+          "الشارقة",
+          "دبي",
+          "عجمان",
+          "النهدة",
+          "المجاز",
+          "مويليح",
+          "ديرة",
+          "البرشاء",
+          "مردف"
+        ]
+      },
+      "oman": {
+        "id": "oman",
+        "country": "Oman",
+        "countryAr": "سلطنة عُمان",
+        "city": "Muscat",
+        "cityAr": "مسقط",
+        "phone": "+96895925092",
+        "phoneDisplay": "+968 95925092",
+        "whatsapp": "+96895925092",
+        "whatsappDisplay": "+968 95925092",
+        "address": "Muscat, Sultanate of Oman",
+        "addressAr": "مسقط، سلطنة عُمان",
+        "currency": "OMR",
+        "currencyAr": "ريال عماني",
+        "googleMapsUrl": "https://maps.google.com/?q=Muscat+Oman",
+        "serviceAreas": [
+          "Muscat",
+          "Seeb",
+          "Bawshar",
+          "Muttrah",
+          "Al Khuwair",
+          "Azaiba"
+        ],
+        "serviceAreasAr": [
+          "مسقط",
+          "السيب",
+          "بوشر",
+          "مطرح",
+          "الخوير",
+          "العذيبة"
+        ]
+      },
+      "saudi": {
+        "id": "saudi",
+        "country": "Saudi Arabia",
+        "countryAr": "المملكة العربية السعودية",
+        "city": "Riyadh",
+        "cityAr": "الرياض",
+        "phone": "+966506746486",
+        "phoneDisplay": "050 674 6486",
+        "whatsapp": "+966506746486",
+        "whatsappDisplay": "050 674 6486",
+        "address": "Riyadh, Kingdom of Saudi Arabia",
+        "addressAr": "الرياض، المملكة العربية السعودية",
+        "currency": "SAR",
+        "currencyAr": "ريال",
+        "googleMapsUrl": "https://maps.google.com/?q=Riyadh+Saudi+Arabia",
+        "serviceAreas": [
+          "Riyadh",
+          "Olaya",
+          "Al Malaz",
+          "Al Nakheel",
+          "Al Yasmin",
+          "Al Sahafa"
+        ],
+        "serviceAreasAr": [
+          "الرياض",
+          "العليا",
+          "الملز",
+          "النخيل",
+          "الياسمين",
+          "الصحافة"
+        ]
+      }
+    },
+    "socialLinks": {
+      "facebook": "https://facebook.com",
+      "instagram": "https://instagram.com"
+    },
+    "disclaimerEn": "Fixar is an independent appliance repair and maintenance service provider. Brand names and trademarks belong to their respective owners and are used solely to identify appliances serviced. Fixar is not affiliated with or authorized by manufacturers unless explicitly stated.",
+    "disclaimerAr": "فيكسار هي شركة مستقلة لتقديم خدمات صيانة وإصلاح الأجهزة المنزلية. جميع أسماء العلامات التجارية والعلامات التجارية المسجلة مملوكة لأصحابها المعنيين وتستخدم فقط لتوضيح الأجهزة التي نقدم خدمات صيانتها. فيكسار غير تابعة أو معتمدة رسمياً من قبل المصنّعين ما لم يُذكر ذلك صراحةً.",
+    "seoDefaults": {
+      "titleEn": "Fixar Service | Professional Appliance Repair UAE (Sharjah & Dubai)",
+      "titleAr": "فيكسار سيرفيس | تصليح وصيانة الأجهزة المنزلية في الإمارات (الشارقة ودبي)",
+      "descriptionEn": "Expert home appliance repair in UAE. AC repair, refrigerator servicing, washing machine, oven, water heater repair. 24/7 emergency response, verified technicians, doorstep service.",
+      "descriptionAr": "خدمات احترافية لتصليح وصيانة الأجهزة المنزلية في الإمارات. تصليح مكيفات، ثلاجات، غسالات، أفران، وسخانات المياه. خدمة منزلية متواصلة 24/7 مع فنيين معتمدين."
+    }
+  },
+  "bookings": [
+    {
+      "id": "seed-booking-1",
+      "reference": "FIX-2026-10492",
+      "customerName": "Ahmed Al Mansoori",
+      "customerPhone": "+971501234567",
+      "customerWhatsapp": "+971501234567",
+      "customerEmail": "ahmed.m@example.com",
+      "country": "United Arab Emirates",
+      "city": "Sharjah",
+      "area": "Al Majaz 2",
+      "address": {
+        "building": "Corniche Tower",
+        "apartment": "1402",
+        "street": "Al Majaz Waterfront St",
+        "landmark": "Opposite Buhaira Corniche"
+      },
+      "serviceId": "ac-repair",
+      "serviceTitle": "Air Conditioner Repair & Servicing",
+      "brand": "O General",
+      "model": "Split AC 2.5 Ton",
+      "problemCategory": "Cooling Failure / Warm Air",
+      "description": "Master bedroom split AC is blowing warm air since yesterday afternoon. Condenser fan is spinning but cooling is absent.",
+      "appointmentDate": "2026-09-09",
+      "appointmentSlot": "Morning (09:00 AM - 01:00 PM)",
+      "status": "assigned",
+      "assignedTechnicianId": "tech-1",
+      "assignedTechnicianName": "Mohammad Tariq",
+      "internalNotes": "Customer notified. Technician carrying R410A gas cylinder and manifold gauge.",
+      "createdAt": "2026-09-08T09:30:00.000Z",
+      "updatedAt": "2026-09-08T10:15:00.000Z"
+    },
+    {
+      "id": "seed-booking-2",
+      "reference": "FIX-2026-10495",
+      "customerName": "Fatima Al Zaabi",
+      "customerPhone": "+971549876543",
+      "customerWhatsapp": "+971549876543",
+      "customerEmail": "fatima.z@example.com",
+      "country": "United Arab Emirates",
+      "city": "Dubai",
+      "area": "Al Barsha 1",
+      "address": {
+        "building": "Golden Sands Villa 4",
+        "apartment": "Villa 4",
+        "street": "14th Street",
+        "landmark": "Near Mall of the Emirates"
+      },
+      "serviceId": "refrigerator-repair",
+      "serviceTitle": "Refrigerator & Freezer Repair",
+      "brand": "Samsung",
+      "model": "Double Door Inverter",
+      "problemCategory": "Excessive Frost / No Lower Cooling",
+      "description": "Freezer works well but bottom vegetable section is not cooling at all. Ice buildup visible on rear wall.",
+      "appointmentDate": "2026-09-09",
+      "appointmentSlot": "Afternoon (01:00 PM - 05:00 PM)",
+      "status": "confirmed",
+      "assignedTechnicianId": "tech-2",
+      "assignedTechnicianName": "Suresh Narayanan",
+      "internalNotes": "Suspected defrost sensor or fan motor failure. Appointment confirmed with client.",
+      "createdAt": "2026-09-08T11:00:00.000Z",
+      "updatedAt": "2026-09-08T11:45:00.000Z"
+    },
+    {
+      "id": "seed-booking-3",
+      "reference": "FIX-2026-10501",
+      "customerName": "Khalid Al Busaidi",
+      "customerPhone": "+96895925092",
+      "customerWhatsapp": "+96895925092",
+      "country": "Oman",
+      "city": "Muscat",
+      "area": "Al Khuwair",
+      "address": {
+        "building": "Al Khuwair Plaza",
+        "apartment": "Flat 204",
+        "street": "Dohat Al Adab St",
+        "landmark": "Behind Radisson Blu"
+      },
+      "serviceId": "washing-machine-repair",
+      "serviceTitle": "Washing Machine & Dryer Repair",
+      "brand": "LG",
+      "model": "Front Load 8KG",
+      "problemCategory": "Loud Drum Bearing Noise",
+      "description": "Machine shakes violently during 1200 RPM spin cycle and makes roaring train-like noise.",
+      "appointmentDate": "2026-09-10",
+      "appointmentSlot": "Morning (09:00 AM - 01:00 PM)",
+      "status": "completed",
+      "createdAt": "2026-09-08T12:30:00.000Z",
+      "updatedAt": "2026-09-08T09:50:25.500Z"
+    },
+    {
+      "customerName": "Test Client",
+      "customerPhone": "0543377512",
+      "customerWhatsapp": "0543377512",
+      "country": "United Arab Emirates",
+      "city": "Sharjah",
+      "area": "Al Majaz",
+      "address": {
+        "building": "Corniche Tower",
+        "apartment": "502",
+        "street": "Al Majaz St",
+        "landmark": "",
+        "mapsLink": ""
+      },
+      "serviceId": "ac-repair",
+      "serviceTitle": "Air Conditioner Repair & Servicing",
+      "brand": "O General",
+      "model": "",
+      "problemCategory": "Not Cooling",
+      "description": "Test booking validation",
+      "appointmentDate": "2026-09-10",
+      "appointmentSlot": "Morning (09:00 AM - 01:00 PM)",
+      "id": "booking-1788857627337-1aur9",
+      "reference": "FIX-2026-10335",
+      "status": "confirmed",
+      "createdAt": "2026-09-08T08:53:47.336Z",
+      "updatedAt": "2026-09-08T08:53:47.736Z",
+      "internalNotes": "Appointment verified by dispatch"
+    },
+    {
+      "customerName": "Rashid Test",
+      "customerPhone": "+971543377512",
+      "customerWhatsapp": "+971543377512",
+      "customerEmail": "rashid.test@fixar.in",
+      "country": "United Arab Emirates",
+      "city": "Sharjah",
+      "area": "Al Majaz 3",
+      "address": {
+        "building": "Pearl Tower",
+        "apartment": "804",
+        "street": "Corniche Road",
+        "landmark": "Near Al Majaz Waterfront",
+        "mapsLink": ""
+      },
+      "serviceId": "ac-repair",
+      "serviceTitle": "Air Conditioner Repair & Servicing",
+      "brand": "Daikin",
+      "model": "Inverter 2.0 Ton",
+      "problemCategory": "Cooling Failure / Warm Air",
+      "description": "AC not cooling since morning, urgent repair requested.",
+      "appointmentDate": "2026-09-12",
+      "appointmentSlot": "Morning (09:00 AM - 01:00 PM)",
+      "id": "booking-1788857691402-bxdc4",
+      "reference": "FIX-2026-23065",
+      "status": "assigned",
+      "createdAt": "2026-09-08T08:54:51.402Z",
+      "updatedAt": "2026-09-08T08:54:51.531Z",
+      "assignedTechnicianId": "tech-1",
+      "assignedTechnicianName": "Mohammad Tariq",
+      "internalNotes": "Assigned to technician Mohammad Tariq"
+    },
+    {
+      "customerName": "Mohammad",
+      "customerPhone": "0854334565",
+      "customerWhatsapp": "0854334565",
+      "customerEmail": "mohammad@gmail.com",
+      "country": "United Arab Emirates",
+      "city": "Sharjah",
+      "area": "Sharjah",
+      "address": {
+        "building": "77yyhh",
+        "apartment": "ffe",
+        "street": "rrtg",
+        "landmark": "",
+        "mapsLink": "ffe"
+      },
+      "serviceId": "ac-repair",
+      "serviceTitle": "Air Conditioner Repair & Servicing",
+      "brand": "Samsung",
+      "model": "",
+      "problemCategory": "Not Cooling / Performance Issue",
+      "description": "Diagnostics requested",
+      "appointmentDate": "2026-09-10",
+      "appointmentSlot": "Evening (05:00 PM - 09:00 PM)",
+      "id": "booking-1788857697413-00qok",
+      "reference": "FIX-2026-25660",
+      "status": "new",
+      "createdAt": "2026-09-08T08:54:57.413Z",
+      "updatedAt": "2026-09-08T08:54:57.413Z"
+    },
+    {
+      "customerName": "Rashid Test",
+      "customerPhone": "+971543377512",
+      "customerWhatsapp": "+971543377512",
+      "customerEmail": "rashid.test@fixar.in",
+      "country": "United Arab Emirates",
+      "city": "Sharjah",
+      "area": "Al Majaz 3",
+      "address": {
+        "building": "Pearl Tower",
+        "apartment": "804",
+        "street": "Corniche Road",
+        "landmark": "Near Al Majaz Waterfront",
+        "mapsLink": ""
+      },
+      "serviceId": "ac-repair",
+      "serviceTitle": "Air Conditioner Repair & Servicing",
+      "brand": "Daikin",
+      "model": "Inverter 2.0 Ton",
+      "problemCategory": "Not cooling",
+      "description": "AC not cooling since morning, urgent repair requested.",
+      "appointmentDate": "2026-09-12",
+      "appointmentSlot": "Morning (09:00 AM - 01:00 PM)",
+      "id": "booking-1788862218968-iqwuv",
+      "reference": "FIX-26-635MCMNH",
+      "status": "new",
+      "createdAt": "2026-09-08T10:10:18.968Z",
+      "updatedAt": "2026-09-08T10:10:18.968Z"
+    },
+    {
+      "customerName": "Rashid Test",
+      "customerPhone": "+971543377512",
+      "customerWhatsapp": "+971543377512",
+      "customerEmail": "rashid.test@fixar.in",
+      "country": "United Arab Emirates",
+      "city": "Sharjah",
+      "area": "Al Majaz 3",
+      "address": {
+        "building": "Pearl Tower",
+        "apartment": "804",
+        "street": "Corniche Road",
+        "landmark": "Near Al Majaz Waterfront",
+        "mapsLink": ""
+      },
+      "serviceId": "ac-repair",
+      "serviceTitle": "Air Conditioner Repair & Servicing",
+      "brand": "Daikin",
+      "model": "Inverter 2.0 Ton",
+      "problemCategory": "Not cooling",
+      "description": "AC not cooling since morning, urgent repair requested.",
+      "appointmentDate": "2026-09-12",
+      "appointmentSlot": "Morning (09:00 AM - 01:00 PM)",
+      "id": "booking-1788862399848-xxl5v",
+      "reference": "FIX-26-JQ62PAA6",
+      "status": "technician_en_route",
+      "createdAt": "2026-09-08T10:13:19.848Z",
+      "updatedAt": "2026-09-08T10:13:20.064Z",
+      "internalNotes": "Technician dispatched and en route",
+      "assignedTechnicianId": "tech-1",
+      "assignedTechnicianName": "Mohammad Tariq"
+    },
+    {
+      "customerName": "Rashid Test",
+      "customerPhone": "+971543377512",
+      "customerWhatsapp": "+971543377512",
+      "customerEmail": "rashid.test@fixar.in",
+      "country": "United Arab Emirates",
+      "city": "Sharjah",
+      "area": "Al Majaz 3",
+      "address": {
+        "building": "Pearl Tower",
+        "apartment": "804",
+        "street": "Corniche Road",
+        "landmark": "Near Al Majaz Waterfront",
+        "mapsLink": ""
+      },
+      "serviceId": "ac-repair",
+      "serviceTitle": "Air Conditioner Repair & Servicing",
+      "brand": "Daikin",
+      "model": "Inverter 2.0 Ton",
+      "problemCategory": "Not cooling",
+      "description": "AC not cooling since morning, urgent repair requested.",
+      "appointmentDate": "2026-09-12",
+      "appointmentSlot": "Morning (09:00 AM - 01:00 PM)",
+      "id": "booking-1788865896969-lmty1",
+      "reference": "FIX-26-JLX5UDUN",
+      "status": "technician_en_route",
+      "createdAt": "2026-09-08T11:11:36.969Z",
+      "updatedAt": "2026-09-08T11:11:37.443Z",
+      "internalNotes": "Technician dispatched and en route",
+      "assignedTechnicianId": "tech-1",
+      "assignedTechnicianName": "Mohammad Tariq"
+    }
+  ],
+  "statusHistory": [
+    {
+      "id": "hist-1",
+      "bookingRef": "FIX-2026-10492",
+      "status": "new",
+      "note": "Booking request submitted online by customer.",
+      "timestamp": "2026-09-08T09:30:00.000Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-2",
+      "bookingRef": "FIX-2026-10492",
+      "status": "confirmed",
+      "note": "Customer confirmed preferred appointment window via telephone.",
+      "timestamp": "2026-09-08T09:45:00.000Z",
+      "actor": "Dispatch Desk"
+    },
+    {
+      "id": "hist-3",
+      "bookingRef": "FIX-2026-10492",
+      "status": "assigned",
+      "note": "Job assigned to senior AC technician Mohammad Tariq.",
+      "timestamp": "2026-09-08T10:15:00.000Z",
+      "actor": "Dispatch Desk"
+    },
+    {
+      "id": "hist-4",
+      "bookingRef": "FIX-2026-10495",
+      "status": "new",
+      "note": "Booking request submitted online by customer.",
+      "timestamp": "2026-09-08T11:00:00.000Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-5",
+      "bookingRef": "FIX-2026-10495",
+      "status": "confirmed",
+      "note": "Appointment verified and scheduled for afternoon slot.",
+      "timestamp": "2026-09-08T11:45:00.000Z",
+      "actor": "Dispatch Desk"
+    },
+    {
+      "id": "hist-6",
+      "bookingRef": "FIX-2026-10501",
+      "status": "new",
+      "note": "Booking request submitted for Muscat service location.",
+      "timestamp": "2026-09-08T12:30:00.000Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-1788857627338",
+      "bookingRef": "FIX-2026-10335",
+      "status": "new",
+      "note": "Service booking received online via portal.",
+      "timestamp": "2026-09-08T08:53:47.336Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-1788857627736",
+      "bookingRef": "FIX-2026-10335",
+      "status": "confirmed",
+      "note": "Appointment verified by dispatch",
+      "timestamp": "2026-09-08T08:53:47.736Z",
+      "actor": "Admin Operator"
+    },
+    {
+      "id": "hist-1788857691402",
+      "bookingRef": "FIX-2026-23065",
+      "status": "new",
+      "note": "Service booking received online via portal.",
+      "timestamp": "2026-09-08T08:54:51.402Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-1788857691531",
+      "bookingRef": "FIX-2026-23065",
+      "status": "assigned",
+      "note": "Assigned to technician Mohammad Tariq",
+      "timestamp": "2026-09-08T08:54:51.531Z",
+      "actor": "Admin Operator"
+    },
+    {
+      "id": "hist-1788857697413",
+      "bookingRef": "FIX-2026-25660",
+      "status": "new",
+      "note": "Service booking received online via portal.",
+      "timestamp": "2026-09-08T08:54:57.413Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-1788861025500",
+      "bookingRef": "FIX-2026-10501",
+      "status": "completed",
+      "note": "Status updated to completed",
+      "timestamp": "2026-09-08T09:50:25.500Z",
+      "actor": "Admin Operator"
+    },
+    {
+      "id": "hist-1788862218968",
+      "bookingRef": "FIX-26-635MCMNH",
+      "status": "new",
+      "note": "Service booking request registered into system.",
+      "timestamp": "2026-09-08T10:10:18.968Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-1788862399848",
+      "bookingRef": "FIX-26-JQ62PAA6",
+      "status": "new",
+      "note": "Service booking request registered into system.",
+      "timestamp": "2026-09-08T10:13:19.848Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-1788862400044",
+      "bookingRef": "FIX-26-JQ62PAA6",
+      "status": "accepted",
+      "note": "Accepted by dispatch supervisor",
+      "timestamp": "2026-09-08T10:13:20.044Z",
+      "actor": "Admin Operator"
+    },
+    {
+      "id": "hist-1788862400064",
+      "bookingRef": "FIX-26-JQ62PAA6",
+      "status": "technician_en_route",
+      "note": "Technician dispatched and en route",
+      "timestamp": "2026-09-08T10:13:20.064Z",
+      "actor": "Admin Operator"
+    },
+    {
+      "id": "hist-1788865896984",
+      "bookingRef": "FIX-26-JLX5UDUN",
+      "status": "new",
+      "note": "Service booking request registered into system.",
+      "timestamp": "2026-09-08T11:11:36.969Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-1788865897405",
+      "bookingRef": "FIX-26-JLX5UDUN",
+      "status": "accepted",
+      "note": "Accepted by dispatch supervisor",
+      "timestamp": "2026-09-08T11:11:37.405Z",
+      "actor": "Admin Operator"
+    },
+    {
+      "id": "hist-1788865897443",
+      "bookingRef": "FIX-26-JLX5UDUN",
+      "status": "technician_en_route",
+      "note": "Technician dispatched and en route",
+      "timestamp": "2026-09-08T11:11:37.443Z",
+      "actor": "Admin Operator"
+    }
+  ],
+  "technicians": [
+    {
+      "id": "tech-1",
+      "name": "Mohammad Tariq",
+      "phone": "+971 50 123 4567",
+      "specialties": [
+        "AC Repair",
+        "Compressor Overhaul",
+        "Gas Charging"
+      ],
+      "serviceAreas": [
+        "Sharjah",
+        "Ajman",
+        "Al Nahda"
+      ],
+      "active": true,
+      "assignedJobsCount": 3
+    },
+    {
+      "id": "tech-2",
+      "name": "Suresh Narayanan",
+      "phone": "+971 52 987 6543",
+      "specialties": [
+        "Refrigerator Repair",
+        "Washing Machine",
+        "Deep Freezers"
+      ],
+      "serviceAreas": [
+        "Dubai",
+        "Sharjah",
+        "Deira",
+        "Al Barsha"
+      ],
+      "active": true,
+      "assignedJobsCount": 2
+    },
+    {
+      "id": "tech-3",
+      "name": "Bilal Ahmad",
+      "phone": "+971 55 456 7890",
+      "specialties": [
+        "Kitchen Chimney",
+        "Gas Stove",
+        "Microwave & Oven"
+      ],
+      "serviceAreas": [
+        "Sharjah",
+        "Al Majaz",
+        "Muwaileh"
+      ],
+      "active": true,
+      "assignedJobsCount": 1
+    },
+    {
+      "id": "tech-4",
+      "name": "Zahid Qureshi",
+      "phone": "+971 56 345 6789",
+      "specialties": [
+        "Plumbing Services",
+        "Water Heaters",
+        "RO Purifiers"
+      ],
+      "serviceAreas": [
+        "Dubai",
+        "Mirdif",
+        "Sharjah"
+      ],
+      "active": true,
+      "assignedJobsCount": 1
+    }
+  ],
+  "contactMessages": [
+    {
+      "id": "msg-1",
+      "name": "Salim Al Nuaimi",
+      "phone": "+971 50 765 4321",
+      "email": "salim.nuaimi@example.com",
+      "subject": "Villa AC Annual Maintenance Contract Inquiry",
+      "message": "Hello Fixar team, we have 8 split AC units in our villa in Al Zahraa, Sharjah. Do you provide biannual service packages?",
+      "createdAt": "2026-09-08T08:00:00.000Z",
+      "read": false
+    },
+    {
+      "name": "Test Customer",
+      "phone": "+971543377512",
+      "email": "customer@example.com",
+      "subject": "Washing Machine Service Inquiry",
+      "message": "Can a technician visit today in Sharjah?",
+      "id": "msg-1788857691577",
+      "createdAt": "2026-09-08T08:54:51.577Z",
+      "read": false
+    },
+    {
+      "name": "Test Customer",
+      "phone": "+971543377512",
+      "email": "customer@example.com",
+      "subject": "Washing Machine Service Inquiry",
+      "message": "Can a technician visit today in Sharjah?",
+      "id": "msg-1788862400115",
+      "createdAt": "2026-09-08T10:13:20.115Z",
+      "read": false
+    },
+    {
+      "name": "Test Customer",
+      "phone": "+971543377512",
+      "email": "customer@example.com",
+      "subject": "Washing Machine Service Inquiry",
+      "message": "Can a technician visit today in Sharjah?",
+      "id": "msg-1788865897523",
+      "createdAt": "2026-09-08T11:11:37.523Z",
+      "read": false
+    }
+  ],
+  "blogPosts": [
+    {
+      "id": "blog-1",
+      "slug": "ac-maintenance-tips-uae-summer",
+      "titleEn": "5 Essential AC Maintenance Steps Before the Peak UAE Summer Heat",
+      "titleAr": "5 خطوات أساسية لصيانة المكيف قبل اشتداد حرارة الصيف في الإمارات",
+      "category": "Cooling Care",
+      "categoryAr": "العناية بالتكييف",
+      "author": "Eng. Rashid Al Mansoori",
+      "publishedDate": "March 2026",
+      "readTime": "5 min read",
+      "image": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop",
+      "excerptEn": "Ensure your split or central AC runs smoothly through 45°C temperatures without unexpected breakdowns or skyrocketing electricity bills.",
+      "excerptAr": "حافظ على كفاءة تكييف منزلك خلال درجات الحرارة المرتفعة دون أعطال مفاجئة أو فواتير كهرباء باهظة.",
+      "contentEn": "Summer temperatures in the United Arab Emirates frequently exceed 45°C with severe coastal humidity. In such demanding climates, your home air conditioner is not merely a comfort appliance—it is essential infrastructure.\n\n### 1. Wash Air Filters Every 14 Days\nDust storms and fine desert sand clog evaporator filters rapidly. A restricted air filter strains the blower motor, reduces room cooling by up to 35%, and forces the compressor to run without cycling.\n\n### 2. Inspect Condensate Drain Lines for Mold\nWith high indoor-to-outdoor temperature differentials, AC units generate gallons of condensation daily. Uncleaned drain lines quickly develop algae and jelly blockages, causing water to overflow into walls and ceilings.\n\n### 3. Clear the Outdoor Condenser Unit\nThe outdoor unit requires at least 2 feet of unobstructed clearance to expel heat effectively. Ensure dry leaves, stored boxes, or dust buildup do not choke the aluminium radiator fins.\n\n### 4. Check Refrigerant Pressure & Compressor Amperage\nLow refrigerant from microscopic flare nut leaks causes evaporator coils to ice up while blowing lukewarm air into your rooms. Professional pressure testing restores optimal cooling efficiency.\n\n### 5. Schedule Professional Deep Chemical Washing\nAnnual chemical foaming removes entrenched grease, mildew, and dust from deep within the cooling coils where conventional vacuuming cannot reach.",
+      "contentAr": "تتجاوز درجات الحرارة في دولة الإمارات خلال الصيف حاجز 45 درجة مئوية مصحوبة برطوبة عالية. في هذا المناخ القاسي، يعتبر مكيف الهواء شريان الراحة الأساسي في منزلك.\n\n### 1. تنظيف الفلاتر كل أسبوعين\nتتسبب العواصف الترابية والغبار الناعم في انسداد فلاتر المكيف بسرعة، مما يضعف قوة تدفق الهواء ويزيد استهلاك الطاقة بنسبة 35%.\n\n### 2. فحص مجرى تصريف المياه\nمع الرطوبة العالية، تنتج المكيفات كميات كبيرة من مياه التكثيف. انسداد خرطوم التصريف بالرواسب يؤدي إلى تسريب المياه داخل الغرف وتلف الجدران.\n\n### 3. تنظيف الوحدة الخارجية (الكمبروسر)\nتحتاج الوحدة الخارجية لمساحة تهوية كافية لطرد الحرارة. احرص على إزالة أي عوائق أو أتربة متراكمة على زعانف الألمنيوم الخارجية.\n\n### 4. فحص ضغط غاز التبريد\nنقص غاز الفريون يتسبب في تجمد لفائف التبريد وخروج هواء دافئ. الفحص الدوري يضمن ضبط ضغط الغاز وفق المعايير المعتمدة.\n\n### 5. الغسيل الكيميائي العميق\nيضمن الغسيل الكيميائي بمضخات الضغط العالي إزالة الأوساخ والفطريات العميقة داخل الراديتر، مما يعيد للمكيف كفاءة التبريد كأنه جديد."
+    },
+    {
+      "id": "blog-2",
+      "slug": "refrigerator-not-cooling-troubleshooting-guide",
+      "titleEn": "Why Is Your Refrigerator Not Cooling? Top Causes and DIY Fixes",
+      "titleAr": "لماذا لا تبرد الثلاجة كالمعتاد؟ الأسباب الرئيسية وطرق التعامل معها",
+      "category": "Appliance Care",
+      "categoryAr": "العناية بالأجهزة",
+      "author": "Technician Suresh Kumar",
+      "publishedDate": "February 2026",
+      "readTime": "4 min read",
+      "image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1200&auto=format&fit=crop",
+      "excerptEn": "Discover whether your fridge's cooling trouble is a simple clogged condenser coil or an inverter compressor failure requiring professional service.",
+      "excerptAr": "تعرف على أسباب ضعف تبريد الثلاجة، ومتى يمكنك تنظيف المكثف بنفسك ومتى يتطلب الأمر تدخلاً من فني تبريد متخصص.",
+      "contentEn": "A failing refrigerator can spoil hundreds of dirhams worth of groceries within hours. Here is how to diagnose the issue step by step:\n\n1. **Dust-Choked Condenser Coils**: Located behind or beneath the unit, dusty coils cannot release heat, causing the compressor to overheat and shut off.\n2. **Damaged Door Gasket**: A split magnetic door seal lets warm, humid air seep inside constantly, leading to thick frost build-up.\n3. **Failed Evaporator Fan Motor**: If the freezer is freezing cold but the lower refrigerator compartments are warm, the internal air circulation fan has likely failed.\n4. **Defrost System Failure**: When the defrost bimetal thermostat or heater burns out, ice solidifies over the coils, blocking all airflow.\n5. **Inverter PCB Board Fault**: Power fluctuations can burn the inverter power module, preventing the compressor from starting.",
+      "contentAr": "تعطل تبريد الثلاجة قد يؤدي إلى تلف الأغذية سريعاً. إليك أهم الأسباب الشائعة وخطوات تشخيصها:\n\n1. **تراكم الغبار على المكثف الخارجي**: يؤدي تراكم الأتربة على الشبكة الخلفية إلى ارتفاع حرارة الكمبروسر وتوقفه تلقائياً لحماية نفسه.\n2. **تلف ربلة (كاوتشوك) الباب**: تسريب الهواء البارد ودخول الهواء الدافئ يؤدي إلى تكون ثلوج كثيفة وضعف التبريد.\n3. **عطل مروحة توزيع الهواء**: إذا كان الفريزر بارداً بينما الثلاجة من الأسفل دافئة، فالسبب غالباً هو توقف مروحة توزيع التبريد.\n4. **عطل نظام إذابة الثلج (الديفروست)**: احتراق سخان إذابة الثلج أو الحساس يؤدي إلى انسداد مجاري الهواء بالجليد.\n5. **خلل في بوردة التحكم بالإنفرتر**: تذبذب التيار الكهربائي قد يضر بوحدة التحكم الإلكترونية الخاصة بتشغيل الضاغط."
+    },
+    {
+      "id": "blog-3",
+      "slug": "washing-machine-drum-drainage-care",
+      "titleEn": "How to Prevent Washing Machine Smells, Drain Errors, and Drum Noise",
+      "titleAr": "كيف تتخلص من روائح الغسالة الكريهة وأعطال الصرف وأصوات الحلة المزعجة",
+      "category": "Laundry Maintenance",
+      "categoryAr": "صيانة الغسالات",
+      "author": "Bilal Ahmad",
+      "publishedDate": "January 2026",
+      "readTime": "4 min read",
+      "image": "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?q=80&w=1200&auto=format&fit=crop",
+      "excerptEn": "Simple preventive laundry machine care routines to prevent pump burnouts, bearing damage, and unpleasant mildew odors in clothes.",
+      "excerptAr": "نصائح وإرشادات وقائية بسيطة تحمي مضخة الصرف من الاحتراق وتمنع تآكل رولمان البلي وتراكم الروائح الكريهة.",
+      "contentEn": "Front-load and top-load washing machines are workhorses in modern households, but neglect can quickly lead to expensive drum bearing replacements and drain pump burnout.\n\n### Clean the Coin & Debris Filter Monthly\nLocated at the bottom right corner of modern front-loaders, this filter catches hairpins, coins, and lint. A blocked filter triggers the dreaded 'OE' or 'E20' drainage error.\n\n### Never Overload Beyond Capacity\nStuffing the drum past 80% creates massive centrifugal imbalance during high-speed spinning (1200+ RPM), snapping suspension springs and destroying heavy-duty drum bearings.\n\n### Leave the Door Ajar After Washes\nTrapped moisture inside the airtight drum fosters mold colonies. Leaving the door slightly open allows the drum to air dry naturally, eliminating musty laundry smells.",
+      "contentAr": "تعتبر الغسالات الأوتوماتيكية من أهم الأجهزة المنزلية، لكن إهمال الصيانة البسيطة قد يؤدي لأعطال مكلفة في الحلة وطلمبة الصرف.\n\n### تنظيف فلتر العملات والشوائب شهرياً\nيوجد الفلتر أسفل الغسالة، ويقوم بحجز الدبابيس والعملات المعدنية والوبر. انسداده يتسبب في ظهور كود خطأ الصرف وتوقف الغسالة عن طرد المياه.\n\n### عدم تحميل الغسالة فوق طاقتها\nوضع كميات ملابس زائدة يفقد الحلة توازنها أثناء العصر السريع، مما يؤدي لتلف المساعدين وتآكل رولمان البلي بسرعة.\n\n### ترك باب الغسالة موارباً بعد كل غسلة\nحبس الرطوبة داخل الحلة المغلقة يسبب تكاثر الفطريات والبكتيريا، مما يولد روائح كريهة تنتقل إلى ملابسك النظيفة."
+    }
+  ],
+  "users": [
+    {
+      "id": "user-admin",
+      "username": "admin",
+      "name": "Senior Operations Director",
+      "role": "admin"
+    },
+    {
+      "id": "user-staff",
+      "username": "staff",
+      "name": "Field Operations Supervisor",
+      "role": "staff",
+      "phone": "+971 54 337 7512"
+    }
+  ]
+}
