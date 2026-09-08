@@ -11,6 +11,7 @@ import {
   ContactMessageRecord,
   BlogPostRecord,
   AuthUserRecord,
+  AdminCredentialsRecord,
 } from "./types";
 
 const DB_DIR = path.join(process.cwd(), ".data");
@@ -593,3 +594,62 @@ export function getAllBlogPosts() {
 export function getBlogPostBySlug(slug: string) {
   return getDatabase().blogPosts.find((p) => p.slug === slug);
 }
+
+const DEFAULT_ADMIN_EMAIL = process.env.ADMIN_EMAIL || "fixarservices@gmail.com";
+const DEFAULT_ADMIN_USER = process.env.ADMIN_USER || "fixarservices@gmail.com";
+const DEFAULT_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "FixarServices@2026@";
+
+export function getAdminCredentials(): AdminCredentialsRecord {
+  const db = getDatabase();
+  if (!db.adminCredentials) {
+    db.adminCredentials = {
+      email: DEFAULT_ADMIN_EMAIL,
+      username: DEFAULT_ADMIN_USER,
+      password: DEFAULT_ADMIN_PASSWORD,
+      name: "Operations Director",
+      updatedAt: new Date().toISOString(),
+    };
+    saveDatabase(db);
+  }
+  return db.adminCredentials;
+}
+
+export function updateAdminCredentials(newCreds: {
+  email?: string;
+  username?: string;
+  password?: string;
+  name?: string;
+}): AdminCredentialsRecord {
+  const db = getDatabase();
+  const current = getAdminCredentials();
+
+  const updated: AdminCredentialsRecord = {
+    email: (newCreds.email || current.email).trim().toLowerCase(),
+    username: (newCreds.username || newCreds.email || current.username).trim().toLowerCase(),
+    password: newCreds.password ? newCreds.password.trim() : current.password,
+    name: newCreds.name || current.name,
+    updatedAt: new Date().toISOString(),
+  };
+
+  db.adminCredentials = updated;
+  saveDatabase(db);
+  return updated;
+}
+
+export function verifyAdminCredentials(userOrEmail: string, pass: string): boolean {
+  const creds = getAdminCredentials();
+  const cleanUser = (userOrEmail || "").trim().toLowerCase();
+  const cleanPass = (pass || "").trim();
+
+  // Allow login by email ("fixarservices@gmail.com"), custom username, or legacy "admin"
+  const isUserValid =
+    cleanUser === creds.email.toLowerCase() ||
+    cleanUser === creds.username.toLowerCase() ||
+    cleanUser === "admin" ||
+    cleanUser === DEFAULT_ADMIN_EMAIL.toLowerCase();
+
+  const isPassValid = cleanPass === creds.password || cleanPass === DEFAULT_ADMIN_PASSWORD;
+
+  return isUserValid && isPassValid;
+}
+

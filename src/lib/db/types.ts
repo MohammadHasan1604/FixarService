@@ -104,6 +104,14 @@ export interface AuthUserRecord {
   specialties?: string[];
 }
 
+export interface AdminCredentialsRecord {
+  email: string;
+  username: string;
+  password: string;
+  name: string;
+  updatedAt: string;
+}
+
 export interface DatabaseState {
   settings: BusinessSettingsType;
   bookings: BookingRecord[];
@@ -112,4 +120,5 @@ export interface DatabaseState {
   contactMessages: ContactMessageRecord[];
   blogPosts: BlogPostRecord[];
   users?: AuthUserRecord[];
+  adminCredentials?: AdminCredentialsRecord;
 }

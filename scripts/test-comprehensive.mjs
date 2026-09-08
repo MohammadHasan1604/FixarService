@@ -188,11 +188,15 @@ async function runTests() {
   });
 
   let adminCookie = "";
-  await test("POST /api/auth/login as Admin returns 200 and role: admin", async () => {
+  await test("POST /api/auth/login as Admin with email fixarservices@gmail.com returns 200 and role: admin", async () => {
     const res = await fetch(`${BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role: "admin", password: "fixar2026@admin" }),
+      body: JSON.stringify({
+        username: "fixarservices@gmail.com",
+        password: "FixarServices@2026@",
+        requestedRole: "admin",
+      }),
     });
     assert.strictEqual(res.status, 200);
     const data = await res.json();
@@ -200,6 +204,15 @@ async function runTests() {
     const cookieHeader = res.headers.get("set-cookie");
     assert(cookieHeader && cookieHeader.includes("fixar_auth_token"), "Cookie fixar_auth_token set");
     adminCookie = cookieHeader.split(";")[0];
+  });
+
+  await test("GET /api/admin/credentials returns admin profile metadata", async () => {
+    const res = await fetch(`${BASE_URL}/api/admin/credentials`, {
+      headers: { Cookie: adminCookie },
+    });
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.email, "fixarservices@gmail.com");
   });
 
   await test("GET /api/auth/session returns user details for staff", async () => {

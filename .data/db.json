@@ -401,6 +401,66 @@
       "internalNotes": "Technician dispatched and en route",
       "assignedTechnicianId": "tech-1",
       "assignedTechnicianName": "Mohammad Tariq"
+    },
+    {
+      "customerName": "Mohammad Hasan",
+      "customerPhone": "09743250071",
+      "customerWhatsapp": "9",
+      "country": "United Arab Emirates",
+      "city": "Sharjah",
+      "area": "Sharjah",
+      "address": {
+        "building": "Villa 1",
+        "apartment": "",
+        "street": "",
+        "landmark": "",
+        "mapsLink": ""
+      },
+      "serviceId": "ac-repair",
+      "serviceTitle": "Air Conditioner Repair & Servicing",
+      "brand": "General / Other",
+      "model": "",
+      "problemCategory": "Not cooling at all / Warm air blowing",
+      "description": "General diagnosis and inspection requested",
+      "appointmentDate": "2026-09-08",
+      "appointmentSlot": "Immediate Emergency (Within 90 Mins)",
+      "id": "booking-1788866968445-645aw",
+      "reference": "FIX-26-D624CBUN",
+      "status": "new",
+      "createdAt": "2026-09-08T11:29:28.445Z",
+      "updatedAt": "2026-09-08T11:29:28.445Z"
+    },
+    {
+      "customerName": "Rashid Test",
+      "customerPhone": "+971543377512",
+      "customerWhatsapp": "+971543377512",
+      "customerEmail": "rashid.test@fixar.in",
+      "country": "United Arab Emirates",
+      "city": "Sharjah",
+      "area": "Al Majaz 3",
+      "address": {
+        "building": "Pearl Tower",
+        "apartment": "804",
+        "street": "Corniche Road",
+        "landmark": "Near Al Majaz Waterfront",
+        "mapsLink": ""
+      },
+      "serviceId": "ac-repair",
+      "serviceTitle": "Air Conditioner Repair & Servicing",
+      "brand": "Daikin",
+      "model": "Inverter 2.0 Ton",
+      "problemCategory": "Not cooling",
+      "description": "AC not cooling since morning, urgent repair requested.",
+      "appointmentDate": "2026-09-12",
+      "appointmentSlot": "Morning (09:00 AM - 01:00 PM)",
+      "id": "booking-1788867801825-75jk8",
+      "reference": "FIX-26-S57HUCQ8",
+      "status": "technician_en_route",
+      "createdAt": "2026-09-08T11:43:21.825Z",
+      "updatedAt": "2026-09-08T11:43:21.967Z",
+      "internalNotes": "Technician dispatched and en route",
+      "assignedTechnicianId": "tech-1",
+      "assignedTechnicianName": "Mohammad Tariq"
     }
   ],
   "statusHistory": [
@@ -555,6 +615,38 @@
       "note": "Technician dispatched and en route",
       "timestamp": "2026-09-08T11:11:37.443Z",
       "actor": "Admin Operator"
+    },
+    {
+      "id": "hist-1788866968445",
+      "bookingRef": "FIX-26-D624CBUN",
+      "status": "new",
+      "note": "Service booking request registered into system.",
+      "timestamp": "2026-09-08T11:29:28.445Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-1788867801825",
+      "bookingRef": "FIX-26-S57HUCQ8",
+      "status": "new",
+      "note": "Service booking request registered into system.",
+      "timestamp": "2026-09-08T11:43:21.825Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-1788867801948",
+      "bookingRef": "FIX-26-S57HUCQ8",
+      "status": "accepted",
+      "note": "Accepted by dispatch supervisor",
+      "timestamp": "2026-09-08T11:43:21.948Z",
+      "actor": "Admin Operator"
+    },
+    {
+      "id": "hist-1788867801967",
+      "bookingRef": "FIX-26-S57HUCQ8",
+      "status": "technician_en_route",
+      "note": "Technician dispatched and en route",
+      "timestamp": "2026-09-08T11:43:21.967Z",
+      "actor": "Admin Operator"
     }
   ],
   "technicians": [
@@ -668,6 +760,16 @@
       "id": "msg-1788865897523",
       "createdAt": "2026-09-08T11:11:37.523Z",
       "read": false
+    },
+    {
+      "name": "Test Customer",
+      "phone": "+971543377512",
+      "email": "customer@example.com",
+      "subject": "Washing Machine Service Inquiry",
+      "message": "Can a technician visit today in Sharjah?",
+      "id": "msg-1788867801995",
+      "createdAt": "2026-09-08T11:43:21.995Z",
+      "read": false
     }
   ],
   "blogPosts": [
@@ -734,5 +836,12 @@
       "role": "staff",
       "phone": "+971 54 337 7512"
     }
-  ]
+  ],
+  "adminCredentials": {
+    "email": "fixarservices@gmail.com",
+    "username": "fixarservices@gmail.com",
+    "password": "FixarServices@2026@",
+    "name": "Operations Director",
+    "updatedAt": "2026-09-08T11:34:49.530Z"
+  }
 }
