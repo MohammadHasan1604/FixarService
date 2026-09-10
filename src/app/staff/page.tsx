@@ -253,6 +253,19 @@ export default function StaffDashboardPage() {
                       <MessageSquare className="w-3.5 h-3.5" />
                       <span>WhatsApp</span>
                     </a>
+
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                        `${job.address?.building || ""} ${job.address?.street || ""} ${job.area}, ${job.city}, UAE`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-semibold flex items-center gap-1.5 border border-slate-800"
+                      title="Open in Google Maps"
+                    >
+                      <MapPin className="w-3.5 h-3.5 text-rose-400" />
+                      <span>Map</span>
+                    </a>
                   </div>
                 </div>
 

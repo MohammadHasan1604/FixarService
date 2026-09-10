@@ -59,6 +59,7 @@ export interface TechnicianRecord {
   id: string;
   name: string;
   phone: string;
+  email?: string;
   specialties: string[];
   serviceAreas: string[];
   active: boolean;
@@ -74,6 +75,7 @@ export interface ContactMessageRecord {
   message: string;
   createdAt: string;
   read: boolean;
+  status?: "new" | "contacted" | "follow_up" | "converted" | "resolved" | "spam" | "archived";
 }
 
 export interface BlogPostRecord {
@@ -112,6 +114,29 @@ export interface AdminCredentialsRecord {
   updatedAt: string;
 }
 
+export interface AuditLogRecord {
+  id: string;
+  actorId: string;
+  actorRole: "admin" | "staff" | "system";
+  action: string;
+  entityType: string;
+  entityId?: string;
+  metadata?: Record<string, any>;
+  timestamp: string;
+}
+
+export interface StaffMemberRecord {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  role: "staff" | "technician";
+  active: boolean;
+  assignedAreas: string[];
+  createdAt: string;
+  lastLogin?: string;
+}
+
 export interface DatabaseState {
   settings: BusinessSettingsType;
   bookings: BookingRecord[];
@@ -121,4 +146,6 @@ export interface DatabaseState {
   blogPosts: BlogPostRecord[];
   users?: AuthUserRecord[];
   adminCredentials?: AdminCredentialsRecord;
+  auditLogs?: AuditLogRecord[];
+  staffMembers?: StaffMemberRecord[];
 }

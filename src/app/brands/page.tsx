@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { brandsList, brandDisclaimerEn, brandDisclaimerAr } from "@/data/brandsData";
 import { ShieldAlert, Calendar, CheckCircle2, ArrowRight } from "lucide-react";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Appliance Brands Serviced | Samsung, LG, Bosch, Whirlpool & More | Fixar",
@@ -12,8 +13,11 @@ export const metadata: Metadata = {
 
 export default function BrandsPage() {
   return (
-    <div className="py-12 sm:py-16 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-950 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* Breadcrumbs */}
+        <Breadcrumbs items={[{ labelEn: "Supported Brands", labelAr: "الماركات المدعومة" }]} />
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold uppercase tracking-wider">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Cairo } from "next/font/google";
 import "./globals.css";
 import { LocaleProvider } from "@/context/LocaleContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileStickyBar from "@/components/layout/MobileStickyBar";
@@ -50,14 +51,21 @@ export default function RootLayout({
     <html lang="en" dir="ltr" className={`${inter.variable} ${cairo.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('fixar_theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d)){document.documentElement.classList.add('dark');document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.classList.remove('dark');document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();`,
+          }}
+        />
       </head>
       <body className="min-h-screen flex flex-col antialiased">
         <LocaleProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <MobileStickyBar />
-          <FloatingWhatsApp />
+          <ThemeProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <MobileStickyBar />
+            <FloatingWhatsApp />
+          </ThemeProvider>
         </LocaleProvider>
       </body>
     </html>

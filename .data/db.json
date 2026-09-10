@@ -461,6 +461,38 @@
       "internalNotes": "Technician dispatched and en route",
       "assignedTechnicianId": "tech-1",
       "assignedTechnicianName": "Mohammad Tariq"
+    },
+    {
+      "customerName": "Rashid Test",
+      "customerPhone": "+971543377512",
+      "customerWhatsapp": "+971543377512",
+      "customerEmail": "rashid.test@fixar.in",
+      "country": "United Arab Emirates",
+      "city": "Sharjah",
+      "area": "Al Majaz 3",
+      "address": {
+        "building": "Pearl Tower",
+        "apartment": "804",
+        "street": "Corniche Road",
+        "landmark": "Near Al Majaz Waterfront",
+        "mapsLink": ""
+      },
+      "serviceId": "ac-repair",
+      "serviceTitle": "Air Conditioner Repair & Servicing",
+      "brand": "Daikin",
+      "model": "Inverter 2.0 Ton",
+      "problemCategory": "Not cooling",
+      "description": "AC not cooling since morning, urgent repair requested.",
+      "appointmentDate": "2026-09-12",
+      "appointmentSlot": "Morning (09:00 AM - 01:00 PM)",
+      "id": "booking-1789018784235-ms23g",
+      "reference": "FIX-26-6PPSM3XU",
+      "status": "technician_en_route",
+      "createdAt": "2026-09-10T05:39:44.235Z",
+      "updatedAt": "2026-09-10T05:39:44.392Z",
+      "internalNotes": "Technician dispatched and en route",
+      "assignedTechnicianId": "tech-1",
+      "assignedTechnicianName": "Mohammad Tariq"
     }
   ],
   "statusHistory": [
@@ -647,6 +679,30 @@
       "note": "Technician dispatched and en route",
       "timestamp": "2026-09-08T11:43:21.967Z",
       "actor": "Admin Operator"
+    },
+    {
+      "id": "hist-1789018784235",
+      "bookingRef": "FIX-26-6PPSM3XU",
+      "status": "new",
+      "note": "Service booking request registered into system.",
+      "timestamp": "2026-09-10T05:39:44.235Z",
+      "actor": "Customer"
+    },
+    {
+      "id": "hist-1789018784377",
+      "bookingRef": "FIX-26-6PPSM3XU",
+      "status": "accepted",
+      "note": "Accepted by dispatch supervisor",
+      "timestamp": "2026-09-10T05:39:44.377Z",
+      "actor": "Admin Operator"
+    },
+    {
+      "id": "hist-1789018784393",
+      "bookingRef": "FIX-26-6PPSM3XU",
+      "status": "technician_en_route",
+      "note": "Technician dispatched and en route",
+      "timestamp": "2026-09-10T05:39:44.392Z",
+      "actor": "Admin Operator"
     }
   ],
   "technicians": [
@@ -770,6 +826,16 @@
       "id": "msg-1788867801995",
       "createdAt": "2026-09-08T11:43:21.995Z",
       "read": false
+    },
+    {
+      "name": "Test Customer",
+      "phone": "+971543377512",
+      "email": "customer@example.com",
+      "subject": "Washing Machine Service Inquiry",
+      "message": "Can a technician visit today in Sharjah?",
+      "id": "msg-1789018784431",
+      "createdAt": "2026-09-10T05:39:44.431Z",
+      "read": false
     }
   ],
   "blogPosts": [
@@ -843,5 +909,35 @@
     "password": "FixarServices@2026@",
     "name": "Operations Director",
     "updatedAt": "2026-09-08T11:34:49.530Z"
-  }
+  },
+  "staffMembers": [
+    {
+      "id": "staff-1",
+      "name": "Rashid Al Mansoori",
+      "email": "rashid.ops@fixar.in",
+      "phone": "+971 50 234 5678",
+      "role": "staff",
+      "active": true,
+      "assignedAreas": [
+        "Sharjah",
+        "Ajman"
+      ],
+      "createdAt": "2026-09-01T08:00:00.000Z",
+      "lastLogin": "2026-09-09T14:20:00.000Z"
+    },
+    {
+      "id": "staff-2",
+      "name": "Kareem Hamdan",
+      "email": "kareem.field@fixar.in",
+      "phone": "+971 55 987 1122",
+      "role": "technician",
+      "active": true,
+      "assignedAreas": [
+        "Dubai",
+        "Al Barsha"
+      ],
+      "createdAt": "2026-09-03T09:30:00.000Z",
+      "lastLogin": "2026-09-10T08:15:00.000Z"
+    }
+  ]
 }

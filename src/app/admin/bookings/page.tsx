@@ -152,8 +152,66 @@ export default function AdminBookingsPage() {
         </div>
       </div>
 
-      {/* Bookings Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden">
+      {/* Mobile Bookings Cards (< md screens) */}
+      <div className="md:hidden space-y-3">
+        {loading ? (
+          <div className="p-8 text-center text-slate-500 text-xs bg-slate-900 rounded-2xl border border-slate-800">
+            Loading booking records...
+          </div>
+        ) : bookings.length === 0 ? (
+          <div className="p-8 text-center text-slate-500 text-xs bg-slate-900 rounded-2xl border border-slate-800">
+            No bookings found matching criteria.
+          </div>
+        ) : (
+          bookings.map((b) => (
+            <div
+              key={b.id}
+              className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-md"
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono font-bold text-xs text-brand-orange">{b.reference}</span>
+                <span
+                  className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                    b.status === "new"
+                      ? "bg-amber-500/20 text-amber-300"
+                      : b.status === "completed"
+                      ? "bg-emerald-500/20 text-emerald-300"
+                      : b.status === "cancelled"
+                      ? "bg-rose-500/20 text-rose-300"
+                      : "bg-blue-500/20 text-blue-300"
+                  }`}
+                >
+                  {b.status.replace(/_/g, " ")}
+                </span>
+              </div>
+
+              <div>
+                <div className="font-bold text-white text-xs">{b.customerName}</div>
+                <div className="text-[11px] text-slate-300">{b.serviceTitle}</div>
+                <div className="text-[10px] text-slate-400">
+                  {b.city} • {b.appointmentDate} ({b.appointmentSlot.split("(")[0]})
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-slate-800 flex items-center justify-between gap-2">
+                <div className="text-[11px] text-slate-400">
+                  Tech: <span className="text-white font-medium">{b.assignedTechnicianName || "Unassigned"}</span>
+                </div>
+                <button
+                  onClick={() => openEditModal(b)}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center gap-1.5 transition-colors"
+                >
+                  <Edit className="w-3.5 h-3.5 text-brand-orange" />
+                  <span>Update</span>
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Desktop Bookings Table (>= md screens) */}
+      <div className="hidden md:block bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-start text-xs text-slate-300">
             <thead className="text-[10px] uppercase font-bold text-slate-400 bg-slate-800/60 border-b border-slate-800">
@@ -241,13 +299,33 @@ export default function AdminBookingsPage() {
                     </td>
 
                     <td className="py-3.5 px-4 text-end">
-                      <button
-                        onClick={() => openEditModal(b)}
-                        className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center gap-1.5 ms-auto transition-colors"
-                      >
-                        <Edit className="w-3.5 h-3.5 text-brand-orange" />
-                        <span>Update</span>
-                      </button>
+                      <div className="flex items-center justify-end gap-1.5">
+                        {b.status === "new" && (
+                          <button
+                            onClick={async () => {
+                              await fetch(`/api/bookings/${b.reference}`, {
+                                method: "PATCH",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                  status: "accepted",
+                                  note: "Directly accepted from console by admin",
+                                }),
+                              });
+                              fetchData();
+                            }}
+                            className="px-2.5 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 text-[11px] font-semibold border border-emerald-500/30 transition-colors"
+                          >
+                            Accept
+                          </button>
+                        )}
+                        <button
+                          onClick={() => openEditModal(b)}
+                          className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center gap-1 transition-colors"
+                        >
+                          <Edit className="w-3 h-3 text-brand-orange" />
+                          <span>Update</span>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

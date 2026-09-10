@@ -12,6 +12,8 @@ import {
   BlogPostRecord,
   AuthUserRecord,
   AdminCredentialsRecord,
+  AuditLogRecord,
+  StaffMemberRecord,
 } from "./types";
 
 const DB_DIR = path.join(process.cwd(), ".data");
@@ -651,5 +653,141 @@ export function verifyAdminCredentials(userOrEmail: string, pass: string): boole
   const isPassValid = cleanPass === creds.password || cleanPass === DEFAULT_ADMIN_PASSWORD;
 
   return isUserValid && isPassValid;
+}
+
+// Audit Logging Subsystem
+export function createAuditLog(entry: {
+  actorId: string;
+  actorRole: "admin" | "staff" | "system";
+  action: string;
+  entityType: string;
+  entityId?: string;
+  metadata?: Record<string, any>;
+}): AuditLogRecord {
+  const db = getDatabase();
+  const log: AuditLogRecord = {
+    id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`,
+    ...entry,
+    timestamp: new Date().toISOString(),
+  };
+  db.auditLogs = db.auditLogs || [];
+  db.auditLogs.unshift(log);
+  if (db.auditLogs.length > 1000) db.auditLogs.pop();
+  saveDatabase(db);
+  return log;
+}
+
+export function getAllAuditLogs(limit = 100): AuditLogRecord[] {
+  const db = getDatabase();
+  return (db.auditLogs || []).slice(0, limit);
+}
+
+// Staff Management Subsystem
+export function getAllStaffMembers(): StaffMemberRecord[] {
+  const db = getDatabase();
+  if (!db.staffMembers || db.staffMembers.length === 0) {
+    db.staffMembers = [
+      {
+        id: "staff-1",
+        name: "Rashid Al Mansoori",
+        email: "rashid.ops@fixar.in",
+        phone: "+971 50 234 5678",
+        role: "staff",
+        active: true,
+        assignedAreas: ["Sharjah", "Ajman"],
+        createdAt: "2026-09-01T08:00:00.000Z",
+        lastLogin: "2026-09-09T14:20:00.000Z",
+      },
+      {
+        id: "staff-2",
+        name: "Kareem Hamdan",
+        email: "kareem.field@fixar.in",
+        phone: "+971 55 987 1122",
+        role: "technician",
+        active: true,
+        assignedAreas: ["Dubai", "Al Barsha"],
+        createdAt: "2026-09-03T09:30:00.000Z",
+        lastLogin: "2026-09-10T08:15:00.000Z",
+      },
+    ];
+    saveDatabase(db);
+  }
+  return db.staffMembers;
+}
+
+export function createStaffMember(data: Omit<StaffMemberRecord, "id" | "createdAt">): StaffMemberRecord {
+  const db = getDatabase();
+  db.staffMembers = db.staffMembers || [];
+  const newStaff: StaffMemberRecord = {
+    ...data,
+    id: `staff-${Date.now()}`,
+    createdAt: new Date().toISOString(),
+  };
+  db.staffMembers.push(newStaff);
+  saveDatabase(db);
+  createAuditLog({
+    actorId: "admin",
+    actorRole: "admin",
+    action: "STAFF_CREATED",
+    entityType: "staff",
+    entityId: newStaff.id,
+    metadata: { name: newStaff.name, email: newStaff.email, role: newStaff.role },
+  });
+  return newStaff;
+}
+
+export function updateStaffMember(id: string, updates: Partial<StaffMemberRecord>): StaffMemberRecord | null {
+  const db = getDatabase();
+  db.staffMembers = db.staffMembers || [];
+  const idx = db.staffMembers.findIndex((s) => s.id === id);
+  if (idx === -1) return null;
+  db.staffMembers[idx] = { ...db.staffMembers[idx], ...updates };
+  saveDatabase(db);
+  createAuditLog({
+    actorId: "admin",
+    actorRole: "admin",
+    action: "STAFF_UPDATED",
+    entityType: "staff",
+    entityId: id,
+    metadata: updates,
+  });
+  return db.staffMembers[idx];
+}
+
+export function deleteStaffMember(id: string): boolean {
+  const db = getDatabase();
+  db.staffMembers = db.staffMembers || [];
+  const initialLen = db.staffMembers.length;
+  db.staffMembers = db.staffMembers.filter((s) => s.id !== id);
+  const deleted = db.staffMembers.length < initialLen;
+  if (deleted) {
+    saveDatabase(db);
+    createAuditLog({
+      actorId: "admin",
+      actorRole: "admin",
+      action: "STAFF_DELETED",
+      entityType: "staff",
+      entityId: id,
+    });
+  }
+  return deleted;
+}
+
+export function deleteTechnician(id: string): boolean {
+  const db = getDatabase();
+  const initialLen = db.technicians.length;
+  db.technicians = db.technicians.filter((t) => t.id !== id);
+  const deleted = db.technicians.length < initialLen;
+  if (deleted) {
+    saveDatabase(db);
+    createAuditLog({
+      actorId: "admin",
+      actorRole: "admin",
+      action: "TECHNICIAN_DELETED",
+      entityType: "technician",
+      entityId: id,
+    });
+  }
+  return deleted;
 }
 

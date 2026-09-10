@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { initialBusinessSettings } from "@/data/businessSettings";
 import { MapPin, Phone, MessageSquare, ArrowRight, ShieldCheck, Clock } from "lucide-react";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Service Locations & Coverage | Fixar Service UAE & Middle East",
@@ -14,8 +15,11 @@ export default function LocationsPage() {
   const regions = Object.values(initialBusinessSettings.supportedRegions);
 
   return (
-    <div className="py-12 sm:py-16 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-950 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* Breadcrumbs */}
+        <Breadcrumbs items={[{ labelEn: "Locations", labelAr: "مناطق الخدمة" }]} />
+
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold uppercase tracking-wider">

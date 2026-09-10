@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { verifySessionToken } from "@/lib/auth/session";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -9,19 +10,17 @@ export async function GET() {
     return NextResponse.json({ authenticated: false }, { status: 401 });
   }
 
-  try {
-    const decoded = Buffer.from(token.value, "base64").toString("utf-8");
-    if (decoded.startsWith("{")) {
-      const parsed = JSON.parse(decoded);
-      if (parsed.role === "admin") {
-        return NextResponse.json({ authenticated: true, user: parsed.user, role: "admin" });
-      }
-    } else if (decoded.startsWith("admin:")) {
-      return NextResponse.json({ authenticated: true, user: "admin", role: "admin" });
-    }
-  } catch (err) {}
+  const session = await verifySessionToken(token.value);
+  if (!session || session.role !== "admin") {
+    return NextResponse.json({ authenticated: false }, { status: 401 });
+  }
 
-  return NextResponse.json({ authenticated: false }, { status: 401 });
+  return NextResponse.json({
+    authenticated: true,
+    user: session.user,
+    role: "admin",
+    name: session.name,
+  });
 }
 
 export async function POST() {

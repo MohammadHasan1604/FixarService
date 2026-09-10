@@ -85,9 +85,11 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
+  const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
 
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
   const loginDropdownRef = useRef<HTMLDivElement>(null);
+  const moreDropdownRef = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
   const { t, language } = useLocale();
@@ -109,12 +111,16 @@ export default function Header() {
       if (loginDropdownRef.current && !loginDropdownRef.current.contains(event.target as Node)) {
         setLoginDropdownOpen(false);
       }
+      if (moreDropdownRef.current && !moreDropdownRef.current.contains(event.target as Node)) {
+        setMoreDropdownOpen(false);
+      }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setServicesDropdownOpen(false);
         setLoginDropdownOpen(false);
+        setMoreDropdownOpen(false);
       }
     };
 
@@ -130,19 +136,23 @@ export default function Header() {
   useEffect(() => {
     setServicesDropdownOpen(false);
     setLoginDropdownOpen(false);
+    setMoreDropdownOpen(false);
   }, [pathname]);
 
-  const navLinks = [
+  const primaryNavLinks = [
     { href: "/", label: t.nav.home },
     { href: "/services", label: t.nav.services, hasMegaMenu: true },
     { href: "/locations", label: t.nav.locations },
     { href: "/brands", label: t.nav.brands },
     { href: "/about", label: t.nav.about },
     { href: "/reviews", label: t.nav.reviews },
-    { href: "/blog", label: language === "ar" ? "المدونة والإرشادات" : "Blog & Guides" },
-    { href: "/faq", label: t.nav.faq },
     { href: "/contact", label: t.nav.contact },
     { href: "/track-booking", label: t.common.trackBooking },
+  ];
+
+  const secondaryNavLinks = [
+    { href: "/blog", label: language === "ar" ? "المدونة والإرشادات" : "Blog & Guides" },
+    { href: "/faq", label: t.nav.faq },
   ];
 
   return (
@@ -155,30 +165,30 @@ export default function Header() {
         <div
           className={`w-full transition-all duration-300 border-b ${
             isScrolled
-              ? "bg-white/95 backdrop-blur-md shadow-md py-2.5 border-slate-200"
-              : "bg-white py-3.5 border-slate-100"
+              ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-md py-2.5 border-slate-200 dark:border-slate-800"
+              : "bg-white dark:bg-slate-900 py-3.5 border-slate-100 dark:border-slate-800"
           }`}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 xl:gap-6">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-white shadow-md shadow-brand-blue/20 group-hover:scale-105 transition-transform">
+            <Link href="/" className="flex items-center gap-2.5 group shrink-0 whitespace-nowrap">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-white shadow-md shadow-brand-blue/20 group-hover:scale-105 transition-transform shrink-0">
                 <Wrench className="w-5 h-5 text-brand-orange transform -rotate-12 group-hover:rotate-0 transition-transform" />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-xl sm:text-2xl font-black tracking-tight text-brand-navy">FIXAR</span>
+                  <span className="text-xl sm:text-2xl font-black tracking-tight text-brand-navy dark:text-white">FIXAR</span>
                   <span className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">SERVICE</span>
                 </div>
-                <span className="text-[9px] sm:text-[10px] text-slate-500 font-medium tracking-tight">
+                <span className="text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-tight">
                   {language === "ar" ? "خبراء صيانة الأجهزة" : "Appliance Repair Experts"}
                 </span>
               </div>
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1.5">
-              {navLinks.map((link) => {
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-2 2xl:gap-3 shrink-0">
+              {primaryNavLinks.map((link) => {
                 const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
 
                 if (link.hasMegaMenu) {
@@ -186,7 +196,7 @@ export default function Header() {
                     <div
                       key={link.href}
                       ref={servicesDropdownRef}
-                      className="relative"
+                      className="relative shrink-0"
                       onMouseEnter={() => setServicesDropdownOpen(true)}
                       onMouseLeave={() => setServicesDropdownOpen(false)}
                     >
@@ -194,13 +204,13 @@ export default function Header() {
                         type="button"
                         onClick={() => setServicesDropdownOpen((prev) => !prev)}
                         aria-expanded={servicesDropdownOpen}
-                        className={`flex items-center gap-1 px-2.5 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                        className={`flex items-center gap-1 px-2.5 xl:px-3 py-2 rounded-xl text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
                           isActive || servicesDropdownOpen
-                            ? "text-brand-blue bg-blue-50/70"
-                            : "text-slate-700 hover:text-brand-blue hover:bg-slate-50"
+                            ? "text-brand-blue bg-blue-50/70 dark:bg-blue-950/40"
+                            : "text-slate-700 dark:text-slate-200 hover:text-brand-blue dark:hover:text-brand-blue hover:bg-slate-50 dark:hover:bg-slate-800"
                         }`}
                       >
-                        <span>{link.label}</span>
+                        <span className="whitespace-nowrap">{link.label}</span>
                         <ChevronDown
                           className={`w-3.5 h-3.5 transition-transform duration-200 ${
                             servicesDropdownOpen ? "rotate-180 text-brand-blue" : "text-slate-400"
@@ -211,22 +221,22 @@ export default function Header() {
                       {/* Mega-Dropdown Menu */}
                       {servicesDropdownOpen && (
                         <div
-                          className="absolute top-full start-0 mt-1 w-[720px] max-w-[90vw] bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-5 z-50 animate-fadeIn"
+                          className="absolute top-full start-0 mt-1 w-[740px] max-w-[90vw] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200/90 dark:border-slate-800 p-5 z-50 animate-fadeIn"
                           role="menu"
                         >
-                          <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+                          <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                               <div className="w-6 h-6 rounded-lg bg-brand-orange/10 flex items-center justify-center">
                                 <Wrench className="w-3.5 h-3.5 text-brand-orange" />
                               </div>
-                              <span className="text-xs font-bold text-brand-navy uppercase tracking-wider">
+                              <span className="text-xs font-bold text-brand-navy dark:text-white uppercase tracking-wider">
                                 {language === "ar" ? "خدمات الصيانة المعتمدة" : "Verified Appliance Services"}
                               </span>
                             </div>
                             <Link
                               href="/services"
                               onClick={() => setServicesDropdownOpen(false)}
-                              className="text-xs font-bold text-brand-blue hover:text-brand-blue-dark flex items-center gap-1"
+                              className="text-xs font-bold text-brand-blue hover:text-brand-blue-dark flex items-center gap-1 whitespace-nowrap"
                             >
                               <span>{t.common.viewAllServices}</span>
                               <ArrowRight className="w-3 h-3 rtl:rotate-180" />
@@ -238,8 +248,8 @@ export default function Header() {
                               const CatIcon = cat.icon;
                               return (
                                 <div key={cat.key} className="space-y-2">
-                                  <div className="flex items-center gap-1.5 pb-1 border-b border-slate-100 font-bold text-slate-900 text-[11px]">
-                                    <CatIcon className="w-3 h-3 text-brand-blue" />
+                                  <div className="flex items-center gap-1.5 pb-1 border-b border-slate-100 dark:border-slate-800 font-bold text-slate-900 dark:text-white text-[11px] whitespace-nowrap">
+                                    <CatIcon className="w-3 h-3 text-brand-blue shrink-0" />
                                     <span>{language === "ar" ? cat.titleAr : cat.titleEn}</span>
                                   </div>
                                   <ul className="space-y-1">
@@ -248,7 +258,7 @@ export default function Header() {
                                         <Link
                                           href={`/services/${item.slug}`}
                                           onClick={() => setServicesDropdownOpen(false)}
-                                          className="block py-1 px-1.5 rounded hover:bg-blue-50 text-slate-600 hover:text-brand-blue transition-colors text-[11px] leading-tight font-medium"
+                                          className="block px-1.5 py-1 rounded hover:bg-blue-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-brand-blue font-medium transition-colors text-[11px] whitespace-nowrap"
                                         >
                                           {language === "ar" ? item.ar : item.en}
                                         </Link>
@@ -269,13 +279,13 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-2.5 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                    className={`px-2.5 xl:px-3 py-2 rounded-xl text-xs xl:text-sm font-semibold whitespace-nowrap shrink-0 transition-colors ${
                       isActive
-                        ? "text-brand-blue bg-blue-50/70"
-                        : "text-slate-700 hover:text-brand-blue hover:bg-slate-50"
+                        ? "text-brand-blue bg-blue-50/70 dark:bg-blue-950/40 font-bold"
+                        : "text-slate-700 dark:text-slate-200 hover:text-brand-blue dark:hover:text-brand-blue hover:bg-slate-50 dark:hover:bg-slate-800"
                     }`}
                   >
-                    {link.label}
+                    <span className="whitespace-nowrap">{link.label}</span>
                   </Link>
                 );
               })}
@@ -344,10 +354,10 @@ export default function Header() {
               {/* Book a Service CTA */}
               <Link
                 href="/book-service"
-                className="inline-flex items-center gap-1.5 px-4 xl:px-5 py-2.5 rounded-xl bg-brand-orange text-white font-bold text-xs xl:text-sm shadow-md shadow-brand-orange/25 hover:bg-brand-orange-hover hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+                className="inline-flex items-center gap-1.5 px-4 xl:px-5 py-2.5 rounded-xl bg-brand-orange text-white font-bold text-xs xl:text-sm whitespace-nowrap shrink-0 shadow-md shadow-brand-orange/25 hover:bg-brand-orange-hover hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
               >
                 <Calendar className="w-4 h-4 shrink-0" />
-                <span>{t.common.bookService}</span>
+                <span className="whitespace-nowrap">{t.common.bookService}</span>
               </Link>
             </div>
 

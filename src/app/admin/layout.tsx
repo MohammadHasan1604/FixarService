@@ -14,7 +14,8 @@ import {
   LogOut,
   Menu,
   X,
-  ShieldAlert,
+  UserCheck,
+  ShieldCheck,
 } from "lucide-react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -31,16 +32,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const handleLogout = async () => {
     try {
       await fetch("/api/admin/verify", { method: "POST" });
+      document.cookie = "fixar_admin_token=; path=/; max-age=0;";
+      document.cookie = "fixar_auth_token=; path=/; max-age=0;";
     } catch {}
-    router.push("/admin/login");
+    router.push("/login?role=admin");
   };
 
   const navItems = [
     { href: "/admin", label: "Dashboard Overview", icon: LayoutDashboard },
     { href: "/admin/bookings", label: "Manage Bookings", icon: Calendar },
     { href: "/admin/technicians", label: "Technicians & Fleet", icon: Users },
+    { href: "/admin/staff", label: "Staff Accounts", icon: UserCheck },
     { href: "/admin/messages", label: "Customer Inquiries", icon: MessageSquare },
     { href: "/admin/settings", label: "Business Settings CMS", icon: Settings },
+    { href: "/admin/audit", label: "Audit & Security Logs", icon: ShieldCheck },
   ];
 
   return (

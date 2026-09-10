@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale } from "@/context/LocaleContext";
+import { useTheme } from "@/context/ThemeContext";
 import {
   X,
   Wrench,
@@ -17,6 +18,8 @@ import {
   UserCheck,
   Lock,
   ArrowRight,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { serviceMegaMenuCategories } from "./Header";
 
@@ -28,6 +31,7 @@ interface MobileNavProps {
 export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
   const pathname = usePathname();
   const { t, language, setLanguage, activeContact, region, setRegion, settings } = useLocale();
+  const { theme, toggleTheme } = useTheme();
   const [servicesExpanded, setServicesExpanded] = useState(false);
 
   if (!isOpen) return null;
@@ -48,42 +52,55 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
     <div className="fixed inset-0 z-50 lg:hidden flex">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-300"
+        className="fixed inset-0 bg-slate-950/70 backdrop-blur-xs transition-opacity duration-300"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Drawer */}
       <div
-        className={`relative w-[85%] max-w-sm bg-white h-full shadow-2xl flex flex-col z-10 overflow-y-auto animate-fadeIn ${
+        className={`relative w-[85%] max-w-sm bg-white dark:bg-slate-900 dark:text-slate-100 h-full shadow-2xl flex flex-col z-10 overflow-y-auto animate-fadeIn ${
           language === "ar" ? "ms-auto" : "me-auto"
         }`}
       >
         {/* Drawer Header */}
-        <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50 sticky top-0 z-20">
+        <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-900/80 sticky top-0 z-20">
           <Link href="/" onClick={onClose} className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-brand-navy flex items-center justify-center text-white">
               <Wrench className="w-4 h-4 text-brand-orange" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-sm text-brand-navy leading-none">FIXAR SERVICE</span>
+              <span className="font-black text-sm text-brand-navy dark:text-white leading-none">FIXAR SERVICE</span>
               <span className="text-[9px] text-brand-orange font-bold uppercase tracking-wider">
                 {language === "ar" ? "خدمات الصيانة" : "Repair Specialists"}
               </span>
             </div>
           </Link>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-200 transition-colors"
-            aria-label="Close menu"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {theme === "dark" ? (
+                <Sun className="w-4 h-4 text-amber-400" />
+              ) : (
+                <Moon className="w-4 h-4 text-slate-500" />
+              )}
+            </button>
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+              aria-label="Close menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Region & Language Selector */}
-        <div className="p-3.5 border-b border-slate-100 bg-white space-y-2.5">
-          <div className="flex items-center justify-between text-xs text-slate-600">
+        <div className="p-3.5 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-2.5">
+          <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
             <span className="flex items-center gap-1 font-semibold text-[11px]">
               <MapPin className="w-3.5 h-3.5 text-brand-orange" />
               {t.common.selectRegion}
@@ -96,7 +113,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                   className={`px-2 py-0.5 rounded text-[10px] font-bold transition-colors ${
                     region === reg.id
                       ? "bg-brand-orange text-white"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200"
                   }`}
                 >
                   {reg.id.toUpperCase()}
@@ -105,7 +122,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-xs text-slate-600">
+          <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
             <span className="flex items-center gap-1 font-semibold text-[11px]">
               <Globe className="w-3.5 h-3.5 text-brand-blue" />
               Language / اللغة
@@ -114,7 +131,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               <button
                 onClick={() => setLanguage("en")}
                 className={`px-2.5 py-0.5 rounded text-xs font-bold ${
-                  language === "en" ? "bg-brand-blue text-white" : "bg-slate-100 text-slate-700"
+                  language === "en" ? "bg-brand-blue text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
                 }`}
               >
                 EN
@@ -122,7 +139,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               <button
                 onClick={() => setLanguage("ar")}
                 className={`px-2.5 py-0.5 rounded text-xs font-bold ${
-                  language === "ar" ? "bg-brand-blue text-white" : "bg-slate-100 text-slate-700"
+                  language === "ar" ? "bg-brand-blue text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
                 }`}
               >
                 عربي

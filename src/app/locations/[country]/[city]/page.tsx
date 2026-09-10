@@ -15,6 +15,7 @@ import {
   ChevronRight,
   ArrowRight,
 } from "lucide-react";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
 interface CityMeta {
   countrySlug: string;
@@ -169,15 +170,13 @@ export default async function CityLocationPage({
     <div className="bg-slate-50 min-h-screen py-14 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs text-slate-500 flex-wrap">
-          <Link href="/" className="hover:text-brand-blue">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <Link href="/locations" className="hover:text-brand-blue">Locations</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-brand-navy font-bold">{data.countryNameEn}</span>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-brand-orange font-bold">{data.cityNameEn}</span>
-        </nav>
+        <Breadcrumbs
+          items={[
+            { labelEn: "Locations", labelAr: "مناطق الخدمة", href: "/locations" },
+            { labelEn: data.countryNameEn, labelAr: data.countryNameAr },
+            { labelEn: data.cityNameEn, labelAr: data.cityNameAr },
+          ]}
+        />
 
         {/* Hero Header */}
         <div className="bg-gradient-to-r from-brand-navy via-[#0d2244] to-brand-navy text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">

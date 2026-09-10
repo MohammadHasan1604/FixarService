@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/db";
 import { Calendar, Clock, User, ChevronRight, ArrowLeft, ArrowRight, Share2, BookOpen } from "lucide-react";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
 export async function generateStaticParams() {
   const posts = getAllBlogPosts();
@@ -50,13 +51,12 @@ export default async function BlogPostDetailPage({
     <article className="py-14 sm:py-20 bg-slate-50 min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-xs text-slate-500 flex-wrap">
-          <Link href="/" className="hover:text-brand-blue">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <Link href="/blog" className="hover:text-brand-blue">Blog</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-brand-navy font-bold truncate max-w-xs">{post.titleEn}</span>
-        </nav>
+        <Breadcrumbs
+          items={[
+            { labelEn: "Blog", labelAr: "المدونة والإرشادات", href: "/blog" },
+            { labelEn: post.titleEn, labelAr: post.titleAr },
+          ]}
+        />
 
         {/* Article Header */}
         <header className="space-y-4">

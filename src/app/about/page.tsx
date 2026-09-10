@@ -12,6 +12,7 @@ import {
   Calendar,
   Phone,
 } from "lucide-react";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "About Fixar Service | Professional Home Appliance Maintenance",
@@ -23,8 +24,11 @@ export default function AboutPage() {
   const uaeContact = initialBusinessSettings.supportedRegions.uae;
 
   return (
-    <div className="bg-slate-50 min-h-screen py-12 sm:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="bg-slate-50 dark:bg-slate-950 min-h-screen py-12 sm:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        {/* Breadcrumbs */}
+        <Breadcrumbs items={[{ labelEn: "About Us", labelAr: "من نحن" }]} />
+
         {/* Page Hero */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold uppercase tracking-wider">

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyAdminCredentials, getAdminCredentials } from "@/lib/db";
+import { signSessionToken } from "@/lib/auth/session";
 
 export async function POST(req: Request) {
   try {
@@ -7,13 +8,12 @@ export async function POST(req: Request) {
 
     if (verifyAdminCredentials(username, password)) {
       const creds = getAdminCredentials();
-      const payload = {
+      const token = await signSessionToken({
+        sub: creds.email,
         user: creds.email,
         role: "admin",
         name: creds.name || "Operations Director",
-        issuedAt: Date.now(),
-      };
-      const token = Buffer.from(JSON.stringify(payload)).toString("base64");
+      });
 
       const response = NextResponse.json({
         success: true,
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 60 * 60 * 24, // 24 hours
+        maxAge: 60 * 60 * 24 * 7,
         path: "/",
       });
 
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 60 * 60 * 24,
+        maxAge: 60 * 60 * 24 * 7,
         path: "/",
       });
 

@@ -11,6 +11,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/session", { method: "POST" });
+      document.cookie = "fixar_auth_token=; path=/; max-age=0;";
     } catch {}
     router.push("/login?role=staff");
   };

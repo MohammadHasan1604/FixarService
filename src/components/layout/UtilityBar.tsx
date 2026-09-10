@@ -2,10 +2,12 @@
 
 import React from "react";
 import { useLocale } from "@/context/LocaleContext";
-import { Phone, Clock, MessageSquare, Globe, MapPin, ChevronDown } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
+import { Phone, Clock, MessageSquare, Globe, MapPin, ChevronDown, Sun, Moon } from "lucide-react";
 
 export default function UtilityBar() {
   const { language, setLanguage, region, setRegion, settings, activeContact, t } = useLocale();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="bg-brand-navy text-slate-200 text-xs py-2 px-4 border-b border-slate-800 transition-colors">
@@ -48,7 +50,7 @@ export default function UtilityBar() {
           </div>
         </div>
 
-        {/* Right: Hotline, WhatsApp & Language Selector */}
+        {/* Right: Hotline, WhatsApp, Theme & Language Selector */}
         <div className="flex items-center gap-4 ms-auto">
           {/* Direct Phone */}
           <a
@@ -74,6 +76,20 @@ export default function UtilityBar() {
             <MessageSquare className="w-3.5 h-3.5" />
             <span>{t.common.whatsappUs}</span>
           </a>
+
+          {/* Theme Toggle (☀ / 🌙) */}
+          <button
+            onClick={toggleTheme}
+            className="p-1.5 rounded-md border border-slate-700 bg-slate-800/80 text-slate-300 hover:text-white hover:border-slate-500 transition-all flex items-center justify-center"
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Light Mode" : "Dark Mode"}
+          >
+            {theme === "dark" ? (
+              <Sun className="w-3.5 h-3.5 text-amber-400 animate-fadeIn" />
+            ) : (
+              <Moon className="w-3.5 h-3.5 text-slate-300 animate-fadeIn" />
+            )}
+          </button>
 
           {/* Language Switcher */}
           <div className="flex items-center border border-slate-700 rounded-md overflow-hidden bg-slate-800/80">

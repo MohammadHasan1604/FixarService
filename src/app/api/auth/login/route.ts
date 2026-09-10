@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyAdminCredentials, getAdminCredentials } from "@/lib/db";
+import { signSessionToken } from "@/lib/auth/session";
 
 export async function POST(req: Request) {
   try {
@@ -19,13 +20,12 @@ export async function POST(req: Request) {
     ) {
       if (verifyAdminCredentials(cleanUser, cleanPass)) {
         const creds = getAdminCredentials();
-        const payload = {
+        const token = await signSessionToken({
+          sub: creds.email,
           user: creds.email,
           role: "admin",
           name: creds.name || "Operations Director",
-          issuedAt: Date.now(),
-        };
-        const token = Buffer.from(JSON.stringify(payload)).toString("base64");
+        });
 
         const res = NextResponse.json({
           success: true,
@@ -38,16 +38,15 @@ export async function POST(req: Request) {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: "lax",
-          maxAge: 60 * 60 * 24, // 24 hours
+          maxAge: 60 * 60 * 24 * 7, // 7 days
           path: "/",
         });
 
-        // Backward compatibility for existing admin token check
         res.cookies.set("fixar_admin_token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: "lax",
-          maxAge: 60 * 60 * 24,
+          maxAge: 60 * 60 * 24 * 7,
           path: "/",
         });
 
@@ -58,13 +57,12 @@ export async function POST(req: Request) {
     // Direct check if requestedRole wasn't explicit but user entered valid admin credentials
     if (verifyAdminCredentials(cleanUser, cleanPass)) {
       const creds = getAdminCredentials();
-      const payload = {
+      const token = await signSessionToken({
+        sub: creds.email,
         user: creds.email,
         role: "admin",
         name: creds.name || "Operations Director",
-        issuedAt: Date.now(),
-      };
-      const token = Buffer.from(JSON.stringify(payload)).toString("base64");
+      });
 
       const res = NextResponse.json({
         success: true,
@@ -77,7 +75,7 @@ export async function POST(req: Request) {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 60 * 60 * 24,
+        maxAge: 60 * 60 * 24 * 7,
         path: "/",
       });
 
@@ -85,7 +83,7 @@ export async function POST(req: Request) {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 60 * 60 * 24,
+        maxAge: 60 * 60 * 24 * 7,
         path: "/",
       });
 
@@ -97,13 +95,12 @@ export async function POST(req: Request) {
       (cleanUser.toLowerCase() === "staff" || requestedRole === "staff" || role === "staff") &&
       cleanPass === (process.env.STAFF_PASSWORD || "fixar2026@staff")
     ) {
-      const payload = {
+      const token = await signSessionToken({
+        sub: "staff-field-user",
         user: "staff",
         role: "staff",
         name: "Field Operations Specialist",
-        issuedAt: Date.now(),
-      };
-      const token = Buffer.from(JSON.stringify(payload)).toString("base64");
+      });
 
       const res = NextResponse.json({
         success: true,
@@ -116,7 +113,7 @@ export async function POST(req: Request) {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 60 * 60 * 24,
+        maxAge: 60 * 60 * 24 * 7,
         path: "/",
       });
 

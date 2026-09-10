@@ -17,6 +17,7 @@ import {
   Clock,
   HelpCircle,
 } from "lucide-react";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
 export async function generateStaticParams() {
   return servicesList.map((s) => ({
@@ -74,17 +75,13 @@ export default async function ServiceDetailPage({
       <section className="bg-gradient-to-b from-brand-navy via-[#0c203f] to-brand-navy text-white py-14 sm:py-20 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6 flex-wrap">
-            <Link href="/" className="hover:text-white transition-colors">
-              Home
-            </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
-            <Link href="/services" className="hover:text-white transition-colors">
-              Services
-            </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
-            <span className="text-brand-orange font-semibold">{service.titleEn}</span>
-          </nav>
+          <Breadcrumbs
+            items={[
+              { labelEn: "Services", labelAr: "الخدمات", href: "/services" },
+              { labelEn: service.titleEn, labelAr: service.titleAr },
+            ]}
+            className="mb-6 text-slate-300 dark:text-slate-400"
+          />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-7 space-y-5">

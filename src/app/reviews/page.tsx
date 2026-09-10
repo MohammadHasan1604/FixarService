@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
 import { Star, Quote, MapPin, Calendar, CheckCircle2 } from "lucide-react";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Customer Reviews & Testimonials | Fixar Service UAE",
@@ -28,15 +29,7 @@ export default function ReviewsPage() {
       rating: 5,
     },
     {
-      author: "Rashid bin Hamad",
-      location: "Al Nahda, Sharjah",
-      service: "LG Front-Load Washer Drum Repair",
-      quote: "Our washing machine was shaking violently during spin cycles. Fixar replaced the worn drum bearings on-site without having to haul the heavy appliance to a workshop.",
-      date: "August 2026",
-      rating: 5,
-    },
-    {
-      author: "Sunil Varma",
+      author: "Rashid Hamad",
       location: "Al Barsha, Dubai",
       service: "Convection Microwave Magnetron Repair",
       quote: "Microwave was running but not heating meals. The engineer discharged the capacitor safely, installed a replacement magnetron, and had it running good as new in 45 minutes.",
@@ -64,6 +57,7 @@ export default function ReviewsPage() {
   return (
     <div className="py-12 sm:py-16 bg-slate-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <Breadcrumbs items={[{ labelEn: "Customer Reviews", labelAr: "آراء العملاء" }]} />
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold uppercase tracking-wider">
             <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />

@@ -18,6 +18,7 @@ import {
   Truck,
   Check,
 } from "lucide-react";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
 const STATUS_PROGRESSION = [
   { key: "new", labelEn: "Booking Received", labelAr: "تم استلام الطلب", icon: Clock },
@@ -102,8 +103,9 @@ function TrackBookingContent() {
   };
 
   return (
-    <div className="py-12 sm:py-16 bg-slate-50 min-h-screen">
+    <div className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-950 min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <Breadcrumbs items={[{ labelEn: "Track Booking", labelAr: "تتبع حالة الحجز" }]} />
         {/* Page Header */}
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold uppercase tracking-wider">

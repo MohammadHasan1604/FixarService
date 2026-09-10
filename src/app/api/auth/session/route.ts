@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { verifySessionToken } from "@/lib/auth/session";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -9,31 +10,23 @@ export async function GET() {
     return NextResponse.json({ authenticated: false }, { status: 401 });
   }
 
-  try {
-    const raw = Buffer.from(token.value, "base64").toString("utf-8");
-    if (raw.startsWith("{")) {
-      const parsed = JSON.parse(raw);
-      return NextResponse.json({
-        authenticated: true,
-        user: parsed.user,
-        role: parsed.role,
-        name: parsed.name,
-      });
-    } else if (raw.startsWith("admin:")) {
-      return NextResponse.json({
-        authenticated: true,
-        user: "admin",
-        role: "admin",
-        name: "Operations Director",
-      });
-    }
-  } catch (err) {}
+  const session = await verifySessionToken(token.value);
 
-  return NextResponse.json({ authenticated: false }, { status: 401 });
+  if (!session) {
+    return NextResponse.json({ authenticated: false }, { status: 401 });
+  }
+
+  return NextResponse.json({
+    authenticated: true,
+    user: session.user,
+    role: session.role,
+    name: session.name,
+    exp: session.exp,
+  });
 }
 
 export async function POST() {
-  const res = NextResponse.json({ success: true, message: "Signed out" });
+  const res = NextResponse.json({ success: true, message: "Signed out successfully" });
   res.cookies.delete("fixar_auth_token");
   res.cookies.delete("fixar_admin_token");
   return res;
