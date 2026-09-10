@@ -75,7 +75,11 @@ export interface ContactMessageRecord {
   message: string;
   createdAt: string;
   read: boolean;
-  status?: "new" | "contacted" | "follow_up" | "converted" | "resolved" | "spam" | "archived";
+  status?: "new" | "read" | "contacted" | "converted" | "resolved" | "spam" | "archived";
+  assignedTo?: string;
+  convertedBookingRef?: string;
+  internalNotes?: string;
+  updatedAt?: string;
 }
 
 export interface BlogPostRecord {
@@ -137,11 +141,28 @@ export interface StaffMemberRecord {
   lastLogin?: string;
 }
 
+export interface FleetVehicleRecord {
+  id: string;
+  plateNumber: string;
+  type: "Van" | "Pickup" | "Car";
+  makeModel: string;
+  year?: number;
+  assignedTechnicianId?: string;
+  assignedTechnicianName?: string;
+  status: "active" | "maintenance" | "inactive";
+  serviceDue?: string;
+  mileage?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
 export interface DatabaseState {
   settings: BusinessSettingsType;
   bookings: BookingRecord[];
   statusHistory: StatusHistoryItem[];
   technicians: TechnicianRecord[];
+  fleetVehicles?: FleetVehicleRecord[];
   contactMessages: ContactMessageRecord[];
   blogPosts: BlogPostRecord[];
   users?: AuthUserRecord[];

@@ -1,8 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createBooking, getAllBookings } from "@/lib/db";
+import { requireStaffOrAdminSession } from "@/lib/auth/serverAuth";
 
-export async function GET(req: Request) {
-  // Admin listings
+export async function GET(req: NextRequest) {
+  // Enforce Staff or Admin session
+  const auth = await requireStaffOrAdminSession(req);
+  if ("errorResponse" in auth) return auth.errorResponse;
+
   try {
     const { searchParams } = new URL(req.url);
     const status = searchParams.get("status");

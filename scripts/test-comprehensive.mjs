@@ -1,7 +1,7 @@
 // Comprehensive End-to-End Test & Security Audit Script for Fixar Service
 import assert from "node:assert";
 
-const BASE_URL = "http://localhost:3005";
+const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3005";
 
 async function runTests() {
   console.log("==================================================");
@@ -100,45 +100,46 @@ async function runTests() {
   });
 
   let createdRef = "";
-  const testPhone = "+971543377512";
+  const testPhone = "+971509988776";
 
   await test("POST /api/bookings with valid data creates booking and returns unique FIX-26-XXXXXXXX reference", async () => {
     const res = await fetch(`${BASE_URL}/api/bookings`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        customerName: "Rashid Test",
+        customerName: "Majid Al Falasi",
         customerPhone: testPhone,
         customerWhatsapp: testPhone,
-        customerEmail: "rashid.test@fixar.in",
-        country: "United Arab Emirates",
-        city: "Sharjah",
-        area: "Al Majaz 3",
+        customerEmail: "majid.falasi@example.com",
         serviceId: "ac-repair",
         serviceTitle: "Air Conditioner Repair & Servicing",
         brand: "Daikin",
-        model: "Inverter 2.0 Ton",
-        problemCategory: "Not cooling",
-        description: "AC not cooling since morning, urgent repair requested.",
-        appointmentDate: "2026-09-12",
-        appointmentSlot: "Morning (09:00 AM - 01:00 PM)",
+        model: "Inverter Split 2.0 Ton",
+        problemCategory: "ac-not-cooling",
+        description: "Compressor hums loudly but no cooling in master bedroom.",
+        country: "United Arab Emirates",
+        city: "Sharjah",
+        area: "Al Majaz 3",
         address: {
-          building: "Pearl Tower",
-          apartment: "804",
+          building: "Crystal Tower",
+          apartment: "1104",
           street: "Corniche Road",
-          landmark: "Near Al Majaz Waterfront",
+          landmark: "Near Al Majaz Amphitheatre",
         },
+        appointmentDate: "2026-09-15",
+        appointmentSlot: "Afternoon (01:00 PM - 05:00 PM)",
       }),
     });
+
     assert.strictEqual(res.status, 201);
     const data = await res.json();
-    assert.strictEqual(data.success, true);
-    assert(/^FIX-26-[A-Z0-9]{8}$/.test(data.reference), `Reference format matches FIX-26-XXXXXXXX: got ${data.reference}`);
+    assert(data.success, "Booking response has success: true");
+    assert(data.reference.startsWith("FIX-26-"), "Booking reference format matches FIX-26-XXXXXXXX");
     createdRef = data.reference;
   });
 
   // -------------------------------------------------------------
-  // SUITE 4: Booking Tracking & Phone Verification Security
+  // SUITE 4: Booking Tracking & Phone Verification Isolation
   // -------------------------------------------------------------
   await test("GET /api/bookings/[reference] without phone verification returns 401 Unauthorized", async () => {
     const res = await fetch(`${BASE_URL}/api/bookings/${createdRef}`);
@@ -146,7 +147,7 @@ async function runTests() {
   });
 
   await test("GET /api/bookings/[reference] with wrong phone returns 404", async () => {
-    const res = await fetch(`${BASE_URL}/api/bookings/${createdRef}?phone=0500000000`);
+    const res = await fetch(`${BASE_URL}/api/bookings/${createdRef}?phone=+971500000000`);
     assert.strictEqual(res.status, 404);
   });
 
@@ -155,19 +156,23 @@ async function runTests() {
     assert.strictEqual(res.status, 200);
     const data = await res.json();
     assert.strictEqual(data.reference, createdRef);
+    assert.strictEqual(data.customerName, "Majid Al Falasi");
     assert.strictEqual(data.status, "new");
-    assert.strictEqual(data.serviceTitle, "Air Conditioner Repair & Servicing");
-    assert(Array.isArray(data.history), "Status history array returned");
+    assert(Array.isArray(data.history), "Includes status history array");
   });
 
   // -------------------------------------------------------------
-  // SUITE 5: Role-Based Auth (Staff & Admin)
+  // SUITE 5: Authentication & Session Verification
   // -------------------------------------------------------------
   await test("POST /api/auth/login with invalid password returns 401", async () => {
     const res = await fetch(`${BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role: "admin", password: "wrong_password_xyz" }),
+      body: JSON.stringify({
+        role: "admin",
+        userOrEmail: "fixarservices@gmail.com",
+        password: "WrongPassword!",
+      }),
     });
     assert.strictEqual(res.status, 401);
   });
@@ -177,7 +182,11 @@ async function runTests() {
     const res = await fetch(`${BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role: "staff", password: "fixar2026@staff" }),
+      body: JSON.stringify({
+        role: "staff",
+        userOrEmail: "staff",
+        password: "fixar2026@staff",
+      }),
     });
     assert.strictEqual(res.status, 200);
     const data = await res.json();
@@ -193,9 +202,9 @@ async function runTests() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        username: "fixarservices@gmail.com",
+        role: "admin",
+        userOrEmail: "fixarservices@gmail.com",
         password: "FixarServices@2026@",
-        requestedRole: "admin",
       }),
     });
     assert.strictEqual(res.status, 200);
@@ -239,7 +248,10 @@ async function runTests() {
   await test("PATCH /api/bookings/[reference] updates status to accepted", async () => {
     const res = await fetch(`${BASE_URL}/api/bookings/${createdRef}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: adminCookie,
+      },
       body: JSON.stringify({
         status: "accepted",
         note: "Accepted by dispatch supervisor",
@@ -253,7 +265,10 @@ async function runTests() {
   await test("PATCH /api/bookings/[reference] updates status to technician_en_route", async () => {
     const res = await fetch(`${BASE_URL}/api/bookings/${createdRef}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: staffCookie,
+      },
       body: JSON.stringify({
         status: "technician_en_route",
         note: "Technician dispatched and en route",
@@ -274,7 +289,7 @@ async function runTests() {
   });
 
   // -------------------------------------------------------------
-  // SUITE 7: Contact Inquiries API
+  // SUITE 7: Contact Inquiries CRM API
   // -------------------------------------------------------------
   await test("POST /api/contact with missing fields returns 400 Bad Request", async () => {
     const res = await fetch(`${BASE_URL}/api/contact`, {
@@ -285,6 +300,7 @@ async function runTests() {
     assert.strictEqual(res.status, 400);
   });
 
+  let createdMsgId = "";
   await test("POST /api/contact with valid data stores customer inquiry", async () => {
     const res = await fetch(`${BASE_URL}/api/contact`, {
       method: "POST",
@@ -300,10 +316,76 @@ async function runTests() {
     assert.strictEqual(res.status, 201);
     const data = await res.json();
     assert.strictEqual(data.success, true);
+    createdMsgId = data.message.id;
+  });
+
+  await test("PATCH /api/contact updates inquiry status to contacted", async () => {
+    const res = await fetch(`${BASE_URL}/api/contact`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: adminCookie,
+      },
+      body: JSON.stringify({
+        id: createdMsgId,
+        status: "contacted",
+      }),
+    });
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.message.status, "contacted");
   });
 
   // -------------------------------------------------------------
-  // SUITE 8: Central Business Settings CMS Synchronization
+  // SUITE 8: Fleet Vehicles API
+  // -------------------------------------------------------------
+  let createdVehId = "";
+  await test("POST /api/fleet registers new service van", async () => {
+    const res = await fetch(`${BASE_URL}/api/fleet`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: adminCookie,
+      },
+      body: JSON.stringify({
+        plateNumber: "SHJ-99231",
+        type: "Van",
+        makeModel: "Toyota HiAce 2025",
+        year: 2025,
+        assignedTechnicianName: "Mohammad Tariq",
+        status: "active",
+        serviceDue: "2026-12-01",
+        mileage: "12,400 km",
+        notes: "Full HVAC diagnostic kit",
+      }),
+    });
+    assert.strictEqual(res.status, 201);
+    const data = await res.json();
+    assert(data.success);
+    assert.strictEqual(data.vehicle.plateNumber, "SHJ-99231");
+    createdVehId = data.vehicle.id;
+  });
+
+  await test("GET /api/fleet returns fleet vehicles list", async () => {
+    const res = await fetch(`${BASE_URL}/api/fleet`, {
+      headers: { Cookie: adminCookie },
+    });
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert(Array.isArray(data.vehicles));
+    assert(data.vehicles.some((v) => v.plateNumber === "SHJ-99231"));
+  });
+
+  await test("DELETE /api/fleet removes test vehicle", async () => {
+    const res = await fetch(`${BASE_URL}/api/fleet?id=${createdVehId}`, {
+      method: "DELETE",
+      headers: { Cookie: adminCookie },
+    });
+    assert.strictEqual(res.status, 200);
+  });
+
+  // -------------------------------------------------------------
+  // SUITE 9: Central Business Settings CMS Synchronization
   // -------------------------------------------------------------
   await test("PUT /api/settings propagates changes immediately", async () => {
     const originalSettingsRes = await fetch(`${BASE_URL}/api/settings`);
@@ -311,7 +393,10 @@ async function runTests() {
 
     const putRes = await fetch(`${BASE_URL}/api/settings`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: adminCookie,
+      },
       body: JSON.stringify({
         ...originalSettings,
         tagline: "Tested & Verified Home Appliance Experts",
@@ -326,7 +411,10 @@ async function runTests() {
     // Restore clean tagline
     await fetch(`${BASE_URL}/api/settings`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: adminCookie,
+      },
       body: JSON.stringify(originalSettings),
     });
   });

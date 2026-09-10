@@ -14,6 +14,7 @@ import {
   AdminCredentialsRecord,
   AuditLogRecord,
   StaffMemberRecord,
+  FleetVehicleRecord,
 } from "./types";
 
 const DB_DIR = path.join(process.cwd(), ".data");
@@ -55,6 +56,63 @@ const initialTechnicians: TechnicianRecord[] = [
     serviceAreas: ["Dubai", "Mirdif", "Sharjah"],
     active: true,
     assignedJobsCount: 1,
+  },
+];
+
+const initialFleetVehicles: FleetVehicleRecord[] = [
+  {
+    id: "fleet-1",
+    plateNumber: "SHJ-88421",
+    type: "Van",
+    makeModel: "Toyota HiAce 2024",
+    year: 2024,
+    assignedTechnicianId: "tech-1",
+    assignedTechnicianName: "Mohammad Tariq",
+    status: "active",
+    serviceDue: "2026-11-15",
+    mileage: "42,800 km",
+    notes: "Equipped with R410A refrigeration manifold, nitrogen pressure testing kit, and vacuum pump.",
+    createdAt: "2026-01-10T08:00:00.000Z",
+  },
+  {
+    id: "fleet-2",
+    plateNumber: "DXB-K-34901",
+    type: "Van",
+    makeModel: "Nissan Urvan 2023",
+    year: 2023,
+    assignedTechnicianId: "tech-2",
+    assignedTechnicianName: "Suresh Narayanan",
+    status: "active",
+    serviceDue: "2026-10-20",
+    mileage: "58,120 km",
+    notes: "Equipped for major appliance repair: washing machine drum tools, replacement inverter motors, and belts.",
+    createdAt: "2026-01-15T08:00:00.000Z",
+  },
+  {
+    id: "fleet-3",
+    plateNumber: "SHJ-12093",
+    type: "Pickup",
+    makeModel: "Toyota Hilux 2022",
+    year: 2022,
+    assignedTechnicianId: "tech-3",
+    assignedTechnicianName: "Bilal Ahmad",
+    status: "active",
+    serviceDue: "2026-12-05",
+    mileage: "71,400 km",
+    notes: "Heavy transport for workshop overhauls, commercial water heaters, and extraction hood installations.",
+    createdAt: "2026-02-01T08:00:00.000Z",
+  },
+  {
+    id: "fleet-4",
+    plateNumber: "DXB-S-90812",
+    type: "Car",
+    makeModel: "Renault Duster 2023",
+    year: 2023,
+    status: "maintenance",
+    serviceDue: "2026-09-12",
+    mileage: "64,300 km",
+    notes: "Scheduled brake pad renewal and AC filter replacement in Sharjah industrial workshop.",
+    createdAt: "2026-02-10T08:00:00.000Z",
   },
 ];
 
@@ -349,6 +407,7 @@ function getInitialState(): DatabaseState {
     bookings: initialBookings,
     statusHistory: initialStatusHistory,
     technicians: initialTechnicians,
+    fleetVehicles: initialFleetVehicles,
     contactMessages: initialContactMessages,
     blogPosts: initialBlogPosts,
     users: initialUsers,
@@ -370,6 +429,9 @@ export function getDatabase(): DatabaseState {
       memoryDb = JSON.parse(content);
       if (!memoryDb!.users) {
         memoryDb!.users = initialUsers;
+      }
+      if (!memoryDb!.fleetVehicles) {
+        memoryDb!.fleetVehicles = initialFleetVehicles;
       }
       return memoryDb!;
     }
@@ -790,4 +852,145 @@ export function deleteTechnician(id: string): boolean {
   }
   return deleted;
 }
+
+export function createTechnician(
+  data: Omit<TechnicianRecord, "id" | "assignedJobsCount">
+): TechnicianRecord {
+  const db = getDatabase();
+  const newTech: TechnicianRecord = {
+    ...data,
+    id: `tech-${Date.now()}`,
+    assignedJobsCount: 0,
+  };
+  db.technicians.push(newTech);
+  saveDatabase(db);
+  createAuditLog({
+    actorId: "admin",
+    actorRole: "admin",
+    action: "TECHNICIAN_CREATED",
+    entityType: "technician",
+    entityId: newTech.id,
+    metadata: { name: newTech.name, phone: newTech.phone },
+  });
+  return newTech;
+}
+
+// Fleet Operations
+export function getAllFleetVehicles(): FleetVehicleRecord[] {
+  const db = getDatabase();
+  return db.fleetVehicles || initialFleetVehicles;
+}
+
+export function createFleetVehicle(
+  data: Omit<FleetVehicleRecord, "id" | "createdAt">
+): FleetVehicleRecord {
+  const db = getDatabase();
+  db.fleetVehicles = db.fleetVehicles || [];
+  const newVehicle: FleetVehicleRecord = {
+    ...data,
+    id: `fleet-${Date.now()}`,
+    createdAt: new Date().toISOString(),
+  };
+  db.fleetVehicles.push(newVehicle);
+  saveDatabase(db);
+  createAuditLog({
+    actorId: "admin",
+    actorRole: "admin",
+    action: "FLEET_VEHICLE_CREATED",
+    entityType: "fleet",
+    entityId: newVehicle.id,
+    metadata: { plateNumber: newVehicle.plateNumber, makeModel: newVehicle.makeModel },
+  });
+  return newVehicle;
+}
+
+export function updateFleetVehicle(
+  id: string,
+  updates: Partial<FleetVehicleRecord>
+): FleetVehicleRecord | null {
+  const db = getDatabase();
+  db.fleetVehicles = db.fleetVehicles || [];
+  const idx = db.fleetVehicles.findIndex((v) => v.id === id);
+  if (idx === -1) return null;
+
+  db.fleetVehicles[idx] = {
+    ...db.fleetVehicles[idx],
+    ...updates,
+    updatedAt: new Date().toISOString(),
+  };
+  saveDatabase(db);
+  createAuditLog({
+    actorId: "admin",
+    actorRole: "admin",
+    action: "FLEET_VEHICLE_UPDATED",
+    entityType: "fleet",
+    entityId: id,
+    metadata: updates,
+  });
+  return db.fleetVehicles[idx];
+}
+
+export function deleteFleetVehicle(id: string): boolean {
+  const db = getDatabase();
+  db.fleetVehicles = db.fleetVehicles || [];
+  const initialLen = db.fleetVehicles.length;
+  db.fleetVehicles = db.fleetVehicles.filter((v) => v.id !== id);
+  const deleted = db.fleetVehicles.length < initialLen;
+  if (deleted) {
+    saveDatabase(db);
+    createAuditLog({
+      actorId: "admin",
+      actorRole: "admin",
+      action: "FLEET_VEHICLE_DELETED",
+      entityType: "fleet",
+      entityId: id,
+    });
+  }
+  return deleted;
+}
+
+// Contact CRM Operations
+export function updateContactMessage(
+  id: string,
+  updates: Partial<ContactMessageRecord>
+): ContactMessageRecord | null {
+  const db = getDatabase();
+  const idx = db.contactMessages.findIndex((m) => m.id === id);
+  if (idx === -1) return null;
+
+  db.contactMessages[idx] = {
+    ...db.contactMessages[idx],
+    ...updates,
+    updatedAt: new Date().toISOString(),
+  };
+  saveDatabase(db);
+  createAuditLog({
+    actorId: "admin",
+    actorRole: "admin",
+    action: "CONTACT_MESSAGE_UPDATED",
+    entityType: "contact_message",
+    entityId: id,
+    metadata: updates,
+  });
+  return db.contactMessages[idx];
+}
+
+export function deleteContactMessage(id: string): boolean {
+  const db = getDatabase();
+  const initialLen = db.contactMessages.length;
+  db.contactMessages = db.contactMessages.filter((m) => m.id !== id);
+  const deleted = db.contactMessages.length < initialLen;
+  if (deleted) {
+    saveDatabase(db);
+    createAuditLog({
+      actorId: "admin",
+      actorRole: "admin",
+      action: "CONTACT_MESSAGE_DELETED",
+      entityType: "contact_message",
+      entityId: id,
+    });
+  }
+  return deleted;
+}
+
 

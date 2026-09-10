@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
-import { getBookingByReference, updateBookingStatus } from "@/lib/db";
+import { NextRequest, NextResponse } from "next/server";
+import { getBookingByReference, updateBookingStatus, createAuditLog } from "@/lib/db";
 import { BookingStatus } from "@/lib/db/types";
+import { requireStaffOrAdminSession } from "@/lib/auth/serverAuth";
 
 export async function GET(
   req: Request,
@@ -27,7 +28,7 @@ export async function GET(
       );
     }
 
-    // Return customer-safe payload
+    // Return customer-safe payload without internal secrets
     return NextResponse.json({
       reference: result.booking.reference,
       customerName: result.booking.customerName,
@@ -49,9 +50,13 @@ export async function GET(
 }
 
 export async function PATCH(
-  req: Request,
+  req: NextRequest,
   { params }: { params: Promise<{ reference: string }> }
 ) {
+  // Enforce Staff or Admin Session
+  const auth = await requireStaffOrAdminSession(req);
+  if ("errorResponse" in auth) return auth.errorResponse;
+
   try {
     const { reference } = await params;
     const body = await req.json();
@@ -61,17 +66,29 @@ export async function PATCH(
       return NextResponse.json({ error: "New status is required" }, { status: 400 });
     }
 
+    const actor = `${auth.session.name} (${auth.session.role})`;
+
     const updated = updateBookingStatus(
       reference,
       status as BookingStatus,
       note,
       assignedTechId,
-      "Admin Operator"
+      actor
     );
 
     if (!updated) {
       return NextResponse.json({ error: "Booking not found" }, { status: 404 });
     }
+
+    // Write audit log
+    createAuditLog({
+      actorId: auth.session.user,
+      actorRole: auth.session.role,
+      action: "BOOKING_STATUS_MUTATION",
+      entityType: "booking",
+      entityId: reference,
+      metadata: { status, assignedTechId, note },
+    });
 
     return NextResponse.json({ success: true, booking: updated });
   } catch (error) {

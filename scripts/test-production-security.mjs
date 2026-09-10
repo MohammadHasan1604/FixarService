@@ -96,18 +96,56 @@ async function runSecuritySuite() {
       `Content-Security-Policy header is configured`
     );
 
-    // 4. ANONYMOUS ACCESS TO PRIVILEGED APIS
-    console.log(`\n[TEST 4] Anonymous access to privileged Admin APIs...`);
+    // 4. ANONYMOUS ACCESS TO SENSITIVE APIS
+    console.log(`\n[TEST 4] Anonymous access to sensitive data endpoints (Anti-Data Leak)...`);
+    const anonBookingsApi = await fetchWithRedirectControl(`${BASE_URL}/api/bookings`);
+    assert(
+      anonBookingsApi.status === 401,
+      `GET /api/bookings rejects anonymous access with 401 Unauthorized (Status: ${anonBookingsApi.status})`
+    );
+
+    const anonPatchBooking = await fetchWithRedirectControl(`${BASE_URL}/api/bookings/FIX-26-K9M28X4P`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "completed" }),
+    });
+    assert(
+      anonPatchBooking.status === 401,
+      `PATCH /api/bookings/[ref] rejects anonymous status change with 401 Unauthorized (Status: ${anonPatchBooking.status})`
+    );
+
+    const anonContactApi = await fetchWithRedirectControl(`${BASE_URL}/api/contact`);
+    assert(
+      anonContactApi.status === 401,
+      `GET /api/contact rejects anonymous message reads with 401 Unauthorized (Status: ${anonContactApi.status})`
+    );
+
+    const anonSettingsPut = await fetchWithRedirectControl(`${BASE_URL}/api/settings`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ companyName: "Hacked Corp" }),
+    });
+    assert(
+      anonSettingsPut.status === 401,
+      `PUT /api/settings rejects anonymous modifications with 401 Unauthorized (Status: ${anonSettingsPut.status})`
+    );
+
+    const anonFleetApi = await fetchWithRedirectControl(`${BASE_URL}/api/fleet`);
+    assert(
+      anonFleetApi.status === 401,
+      `GET /api/fleet rejects anonymous access with 401 Unauthorized (Status: ${anonFleetApi.status})`
+    );
+
     const anonAuditApi = await fetchWithRedirectControl(`${BASE_URL}/api/admin/audit`);
     assert(
-      anonAuditApi.status === 401 || anonAuditApi.status === 403,
-      `/api/admin/audit rejects anonymous access (Status: ${anonAuditApi.status})`
+      anonAuditApi.status === 401,
+      `GET /api/admin/audit rejects anonymous access (Status: ${anonAuditApi.status})`
     );
 
     const anonStaffApi = await fetchWithRedirectControl(`${BASE_URL}/api/admin/staff`);
     assert(
       anonStaffApi.status === 401 || anonStaffApi.status === 403,
-      `/api/admin/staff rejects anonymous access (Status: ${anonStaffApi.status})`
+      `GET /api/admin/staff rejects anonymous access (Status: ${anonStaffApi.status})`
     );
 
     // 5. TAMPERED SESSION TOKEN REJECTION
@@ -142,7 +180,6 @@ async function runSecuritySuite() {
       `Server sets HttpOnly secure session cookie on admin login`
     );
 
-    // Extract cookie
     let adminAuthCookieHeader = "";
     if (adminCookie) {
       adminAuthCookieHeader = adminCookie.map((c) => c.split(";")[0]).join("; ");
@@ -154,6 +191,16 @@ async function runSecuritySuite() {
       headers: { Cookie: adminAuthCookieHeader },
     });
     assert(privilegedAuditRes.status === 200, `Admin successfully queries /api/admin/audit (HTTP 200)`);
+
+    const privilegedBookingsRes = await fetchWithRedirectControl(`${BASE_URL}/api/bookings`, {
+      headers: { Cookie: adminAuthCookieHeader },
+    });
+    assert(privilegedBookingsRes.status === 200, `Admin successfully queries /api/bookings (HTTP 200)`);
+
+    const privilegedFleetRes = await fetchWithRedirectControl(`${BASE_URL}/api/fleet`, {
+      headers: { Cookie: adminAuthCookieHeader },
+    });
+    assert(privilegedFleetRes.status === 200, `Admin successfully queries /api/fleet (HTTP 200)`);
 
     const privilegedStaffRes = await fetchWithRedirectControl(`${BASE_URL}/api/admin/staff`, {
       headers: { Cookie: adminAuthCookieHeader },
@@ -179,8 +226,8 @@ async function runSecuritySuite() {
       staffAuthCookieHeader = staffCookie.map((c) => c.split(";")[0]).join("; ");
     }
 
-    // Staff attempting to access /admin
-    console.log(`\n[TEST 9] Logged-in Staff attempting to access /admin...`);
+    // 9. STAFF BOUNDARY RESTRICTIONS
+    console.log(`\n[TEST 9] Logged-in Staff role boundary tests...`);
     const staffAccessAdmin = await fetchWithRedirectControl(`${BASE_URL}/admin`, {
       headers: { Cookie: staffAuthCookieHeader },
     });
@@ -193,13 +240,30 @@ async function runSecuritySuite() {
       `Staff is redirected back to /staff (Location: ${staffAccessAdmin.headers.location})`
     );
 
-    // Staff attempting admin API
     const staffAuditApi = await fetchWithRedirectControl(`${BASE_URL}/api/admin/audit`, {
       headers: { Cookie: staffAuthCookieHeader },
     });
     assert(
       staffAuditApi.status === 403,
       `Staff access to /api/admin/audit returns HTTP 403 Forbidden`
+    );
+
+    const staffSettingsPut = await fetchWithRedirectControl(`${BASE_URL}/api/settings`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Cookie: staffAuthCookieHeader },
+      body: JSON.stringify({ companyName: "Staff Tampering" }),
+    });
+    assert(
+      staffSettingsPut.status === 403,
+      `Staff attempting PUT /api/settings returns HTTP 403 Forbidden`
+    );
+
+    const staffBookingsGet = await fetchWithRedirectControl(`${BASE_URL}/api/bookings`, {
+      headers: { Cookie: staffAuthCookieHeader },
+    });
+    assert(
+      staffBookingsGet.status === 200,
+      `Staff successfully reads operational bookings (HTTP 200)`
     );
 
     console.log(`\n======================================================`);
